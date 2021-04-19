@@ -15,8 +15,19 @@ const app = firebase.initializeApp({
     storageBucket: "gardenlog-app.appspot.com",
     messagingSenderId: "511751385908",
     appId: "1:511751385908:web:c5c8cb53bf6aa3b27c6b61",
-    measurementId: "G-ZNPZNBX554"
+    measurementId: "G-ZNPZNBX554",
+    storageBucket: "gs://gardenlog-app.appspot.com"
 })
 
 export const auth = app.auth()
 export default app;
+
+
+
+// service firebase.storage {
+//     match /b/{bucket}/o {
+//       match /{allPaths=**} {
+//         allow read, write: if request.auth != null;
+//       }
+//     }
+//   }

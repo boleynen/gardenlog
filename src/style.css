@@ -1,12 +1,12 @@
 :root{
     --light-green: #D2E4B6;
     --dark-green: #517956;
-    --dark: #444444;
-    --grey: #DCDCDC;
-    --white: #F4F4F4;
-    --yellow: #FFDB5E;
-    --blue: #9ED3FC;
-    --red: #F88484;
+    --secondary-dark: #444444;
+    --secondary-grey: #DCDCDC;
+    --secondary-white: #F4F4F4;
+    --accent-yellow: #FFDB5E;
+    --accent-blue: #9ED3FC;
+    --accent-red: #F88484;
     --default-font: 'Open Sans', sans-serif !important;
 }
 
@@ -14,7 +14,7 @@
 
 *{
     font-family: var(--default-font);
-    color: var(--dark);
+    color: var(--secondary-dark);
 }
 
 .reg-login-wrap{
@@ -67,7 +67,7 @@
 
 .reg-login .btn{
     padding: 10px 0px;
-    background-color: var(--light-green);
+    background-color: var(--secondary-dark);
     border: none;
     text-transform: uppercase;
     font-weight: bold;
@@ -75,12 +75,8 @@
 }
 
 .reg-login .btn:hover{
-    background-color: var(--light-green);
+    background-color: var(--secondary-dark);
     transform: scale(1.05);
-}
-
-.login-link .forgot-pwd{
-    margin-top: 30px !important;
 }
 
 @media screen and (min-width: 476px){
@@ -98,7 +94,7 @@
     }
 
     .logo{
-        background-color: var(--dark);
+        background-color: var(--secondary-dark);
         min-width: 50vw;
         min-height: 100vh;
         margin: 0;
@@ -125,3 +121,67 @@
     }
 
 }
+
+.logout .btn{
+    background-color: var(--accent-red);
+    color: white;
+    border: none;
+    width: 100%;
+}
+
+.logout .btn:hover{
+    background-color: var(--accent-red);
+    color: white;
+}
+
+/* Navigation start */
+
+.bottom-nav{
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 15px 0px;
+    box-shadow: 0px -3px 10px 9px rgba(0,0,0,0.02);
+}
+
+.bottom-nav a.nav-link{
+    padding: 0px;
+}
+
+@media screen and (min-width: 768px){
+    .bottom-nav{
+        z-index: 2;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: fit-content;
+        padding: 15px 0px;
+        width: 80px;
+        box-shadow: 3px -3px 10px 9px rgba(0,0,0,0.02);
+    }
+
+    .bottom-nav .nav-item{
+        padding: 5px;
+    }
+
+    .content{
+        margin-left: 80px !important;
+        z-index: 0;
+    }
+    
+}
+
+/* Navigation end */
+/* weather start */
+.content-wrapper{
+    height: 100vh;
+    position: relative;
+}
+
+
+/* weather end */

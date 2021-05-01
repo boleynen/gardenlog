@@ -1,0 +1,26 @@
+@import '../variables.scss';
+.topNav {
+  display: flex;
+  justify-content: space-between;
+  @include default-paddings;
+  padding-top: 4rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #f4f4f4;
+
+  &__btnBack {
+    display: flex;
+    align-items: center;
+  }
+  &__pageTitle {
+    font-size: 2rem;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+    left: -24px;
+  }
+}
+.fa-angle-left {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+}

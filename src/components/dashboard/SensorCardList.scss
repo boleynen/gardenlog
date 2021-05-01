@@ -1,6 +1,5 @@
 @import '../variables.scss';
 .sensorCardList {
-  @include default-paddings;
   display: flex;
 
   gap: 10px;

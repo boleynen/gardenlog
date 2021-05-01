@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigation from './Navigation';
 import { Container } from 'react-bootstrap';
-import SensorCardList from './dashboard/SensorCardList';
+import SensorDataBlock from './dashboard/SensorDataBlock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faExclamation } from '@fortawesome/free-solid-svg-icons';
 import TopNav from './navigation/TopNav';
@@ -34,7 +34,7 @@ export default function Dashboard() {
         <div className='content'>
           <TopNav />
           <ForecastBlock />
-          <SensorCardList sensorData={sensorData} />
+          <SensorDataBlock sensorData={sensorData} />
         </div>
         <Navigation />
       </div>

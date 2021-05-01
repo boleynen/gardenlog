@@ -1,0 +1,13 @@
+@import '../variables.scss';
+.sensorDataBlock {
+  @include default-paddings;
+  @include border-bottom;
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+  &__message {
+    font-size: 0.875rem;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+}

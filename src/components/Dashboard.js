@@ -4,6 +4,7 @@ import { Container } from 'react-bootstrap';
 import SensorCardList from './dashboard/SensorCardList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faExclamation } from '@fortawesome/free-solid-svg-icons';
+import TopNav from './navigation/TopNav';
 export default function Dashboard() {
   const sensorData = [
     {
@@ -29,10 +30,10 @@ export default function Dashboard() {
   return (
     <>
       <div className='content-wrapper'>
-        <Container className='content'>
-          <h1>Dashboard</h1>
+        <div className='content'>
+          <TopNav />
           <SensorCardList sensorData={sensorData} />
-        </Container>
+        </div>
         <Navigation />
       </div>
     </>

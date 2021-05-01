@@ -5,6 +5,7 @@ import SensorCardList from './dashboard/SensorCardList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faExclamation } from '@fortawesome/free-solid-svg-icons';
 import TopNav from './navigation/TopNav';
+import ForecastBlock from './dashboard/ForecastBlock';
 export default function Dashboard() {
   const sensorData = [
     {
@@ -32,6 +33,7 @@ export default function Dashboard() {
       <div className='content-wrapper'>
         <div className='content'>
           <TopNav />
+          <ForecastBlock />
           <SensorCardList sensorData={sensorData} />
         </div>
         <Navigation />

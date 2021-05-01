@@ -1,0 +1,36 @@
+@import '../variables.scss';
+.forecastBlock {
+  @include default-paddings;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+  grid-template-rows: auto auto;
+  gap: 0px 0px;
+  grid-template-areas:
+    'forecastBlock__currentDate forecastBlock__currentDate'
+    'forecastBlock__image forecastBlock__forecastWrapper';
+  @include border-bottom;
+  &__currentDate {
+    grid-area: forecastBlock__currentDate;
+    font-size: 1rem;
+    text-align: right;
+    font-weight: 600;
+    margin: 0;
+  }
+  &__image {
+    grid-area: forecastBlock__image;
+    max-height: 100px;
+  }
+  &__forecastWrapper {
+    grid-area: forecastBlock__forecastWrapper;
+  }
+  &__temp {
+    font-size: 1.56rem;
+    font-weight: 600;
+  }
+  &__desc {
+    font-size: 14px;
+    margin: 0;
+  }
+}

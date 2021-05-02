@@ -2,9 +2,10 @@ import React from 'react';
 import TopNav from './navigation/TopNav';
 import Navigation from './navigation/BottomNav';
 import { Container } from 'react-bootstrap';
-import SensorCardList from './dashboard/SensorCardList';
+import SensorDataBlock from './dashboard/SensorDataBlock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faExclamation } from '@fortawesome/free-solid-svg-icons';
+import ForecastBlock from './dashboard/ForecastBlock';
 export default function Dashboard() {
   const sensorData = [
     {
@@ -32,7 +33,8 @@ export default function Dashboard() {
       <div className='content-wrapper'>
         <div className='content'>
           <TopNav />
-          <SensorCardList sensorData={sensorData} />
+          <ForecastBlock />
+          <SensorDataBlock sensorData={sensorData} />
         </div>
         <Navigation />
       </div>

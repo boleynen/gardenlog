@@ -10,7 +10,7 @@ function SensorCardList(props) {
       {sensorData.map((sensor, index) => {
         return (
           <SensorCard
-            id={index}
+            key={index}
             data={sensor.data}
             title={sensor.title}
             icon={sensor.icon}

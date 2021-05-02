@@ -1,14 +1,16 @@
 import React from 'react'
-import Navigation from './Navigation'
+import TopNav from './navigation/TopNav';
+import Navigation from './navigation/BottomNav';
 import { Container } from "react-bootstrap"
 
 function Calendar() {
     return (
         <>
             <div className="content-wrapper">
-                <Container className="content">
+                <div className="content">
+                    <TopNav />
                     <h1>Kalender</h1>
-                </Container>
+                </div>
                 <Navigation/>
             </div>
         </>

@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   @include default-paddings;
-  padding-top: 4rem;
+  padding-top: 1.5rem;
   padding-bottom: 1.25rem;
   border-bottom: 1px solid #f4f4f4;
 
@@ -12,12 +12,13 @@
     align-items: center;
   }
   &__pageTitle {
-    font-size: 2rem;
+    font-size: 1.2rem;
+    text-transform: uppercase;
     text-align: center;
-    margin-right: auto;
-    margin-left: auto;
+    margin: auto;
     position: relative;
     left: -24px;
+    font-weight: bold;
   }
 }
 .fa-angle-left {

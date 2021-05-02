@@ -1,0 +1,29 @@
+@import '../variables.scss';
+
+.wrapper{
+    @include default-paddings;
+    margin-top: 50px;
+}
+.weatherToday{
+    height: 500px;
+
+    &__title{
+        h1{
+            font-size: 40px;
+            font-weight: bold;
+        }
+        h2{
+            font-size: 16px;
+        }
+    }
+    &__temp{
+        font-size: 120px;
+        font-weight: bold;
+        text-align: center;
+    }
+    &__desc{
+        font-size: 14px;
+        width: 50%;
+        line-height: 1.8;
+    }
+}

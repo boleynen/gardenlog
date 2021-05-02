@@ -9,7 +9,7 @@ import PrivateRoute from "./PrivateRoute"
 import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile"
 import Profile from "./Profile"
-import Weather from "./Weather"
+import Weather from "./weather/Weather"
 import Calendar from "./Calendar"
 import './../style.css';
 

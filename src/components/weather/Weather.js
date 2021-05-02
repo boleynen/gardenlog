@@ -66,7 +66,7 @@ function Weather() {
     {console.log(apiData)}
     <div className="content">
         <TopNav />
-        <div className="wrapper">
+        {/* <div className="wrapper">
             <div className="weatherToday">
                 <div className="weatherToday__title">
                     <h1>{apiData.daily[0].weather[0].main}</h1>
@@ -99,7 +99,7 @@ function Weather() {
                 </ul>
             </div>
             <div className="weatherDetails"></div>
-        </div>
+        </div> */}
     </div>
     <Navigation/>
     </>

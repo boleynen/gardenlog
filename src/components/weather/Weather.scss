@@ -3,9 +3,25 @@
 .wrapper{
     @include default-paddings;
     margin-top: 50px;
+
 }
+
+@media screen and (min-width: 768px){
+    .wrapper{
+        width: 80vw;
+    }
+}
+
 .weatherToday{
-    height: 500px;
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    height: 430px;
+    justify-content: space-between;
+    overflow: hidden;
+    width: calc(100vw - 4rem);
 
     &__title{
         h1{
@@ -23,7 +39,76 @@
     }
     &__desc{
         font-size: 14px;
-        width: 50%;
+        width: 60%;
         line-height: 1.8;
+
+        p{
+            margin-bottom: 0;
+        }
+    }
+    &__img{
+        position: absolute;
+        top: 150px;
+        left: 45%;
+        z-index: -100;
+        width: 55%;
+        overflow: hidden;
+    }
+}
+
+@media screen and (min-width: 768px){
+    .weatherToday{
+        width: 50vw;
+    }
+}
+
+.weatherWeek{
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #f0f0f0;
+
+    &__days{
+        li{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+
+            > p{
+                margin-bottom: 0;
+                width: 90px;
+            }
+
+            div{
+                display: flex;
+                justify-content: space-between;
+                width: 50px;
+
+                p{
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+
+.weatherDetails{
+    padding-bottom: 100px;
+
+    &__detail{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 15px;
+        border: 1px solid #f0f0f0;
+        color: grey;
+
+        .bolder{
+            font-size: 31px;
+            margin-bottom: 0;
+        }
     }
 }

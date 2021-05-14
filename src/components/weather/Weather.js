@@ -3,7 +3,6 @@ import Navigation from '../navigation/BottomNav'
 import TopNav from '../navigation/TopNav';
 import { Container } from "react-bootstrap"
 import './Weather.scss';
-const axios = require('axios');
 
 
 function Weather() {

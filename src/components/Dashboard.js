@@ -1,7 +1,6 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import TopNav from './navigation/TopNav';
-import Navigation from './navigation/BottomNav';
+import React, { useState, useEffect } from 'react';
+// import TopNav from './navigation/TopNav';
+// import Navigation from './navigation/BottomNav';
 import { Container } from 'react-bootstrap';
 import SensorDataBlock from './dashboard/SensorDataBlock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -54,12 +53,12 @@ export default function Dashboard() {
     <>
       <div className='content-wrapper'>
         <div className='content'>
-          <TopNav />
+          {/* <TopNav /> */}
           <ForecastBlock />
           <SensorDataBlock sensorData={sensorData} />
           <PlantListBlock plantsData={plantsData} />
         </div>
-        <Navigation />
+        {/* <Navigation /> */}
       </div>
     </>
   );

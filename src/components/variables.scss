@@ -2,6 +2,10 @@ $button-color: #d4e1e7;
 @mixin default-paddings {
   padding-left: 2rem;
   padding-right: 2rem;
+  @media screen and (min-width: 1450px) {
+    padding-left: 30rem;
+    padding-right: 30rem;
+  }
 }
 @mixin border-bottom {
   border-bottom: solid 1px #f4f4f4;

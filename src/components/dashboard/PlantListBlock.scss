@@ -1,0 +1,14 @@
+@import '../variables.scss';
+.plantListBlock {
+  @include default-paddings;
+  padding-top: 1.5rem;
+  padding-bottom: 4.5rem;
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  &__list {
+    padding-bottom: 0.1rem;
+  }
+}

@@ -10,7 +10,7 @@ function SensorDataBlock(props) {
       <h3 className={'sensorDataBlock__message'}>
         Je planten hebben dorst, geef ze water!
       </h3>
-      <ButtonMedium />
+      <ButtonMedium buttonText={'Notitie toevoegen'} />
     </div>
   );
 }

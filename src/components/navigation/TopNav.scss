@@ -6,6 +6,10 @@
   padding-top: 1.5rem;
   padding-bottom: 1.25rem;
   border-bottom: 1px solid #f4f4f4;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 100;
   
 
   &__btnBack {
@@ -27,11 +31,3 @@
   height: 1.5rem !important;
 }
 
-@media screen and (min-width: 768px){
-  .topNav{
-      // margin-left: 80px
-      z-index: 10000;
-      position: relative;
-      background-color: white;
-  }
-}

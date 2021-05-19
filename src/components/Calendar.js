@@ -1,6 +1,6 @@
 import React from 'react'
-// import TopNav from './navigation/TopNav';
-// import Navigation from './navigation/BottomNav';
+import TopNav from './navigation/TopNav';
+import Navigation from './navigation/BottomNav';
 import { Container } from "react-bootstrap"
 
 function Calendar() {
@@ -8,10 +8,10 @@ function Calendar() {
         <>
             <div className="content-wrapper">
                 <div className="content">
-                    {/* <TopNav /> */}
+                    <TopNav />
                     <h1>Kalender</h1>
                 </div>
-                {/* <Navigation/> */}
+                <Navigation/>
             </div>
         </>
     )

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-// import TopNav from './navigation/TopNav';
-// import Navigation from './navigation/BottomNav'
+import TopNav from './navigation/TopNav';
+import Navigation from './navigation/BottomNav'
 import { Card, Button, Alert, Container } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
@@ -25,7 +25,7 @@ export default function Dashboard() {
     <>
     <div className="content-wrapper">
       <Container className="content">
-      {/* <TopNav /> */}
+      <TopNav />
         <Card className="reg-login-wrap">
           <Card.Body>
             <div className="reg-login">
@@ -44,7 +44,7 @@ export default function Dashboard() {
           </Card.Body>
         </Card>
       </Container>
-      {/* <Navigation/> */}
+      <Navigation/>
     </div>
     </>
   )

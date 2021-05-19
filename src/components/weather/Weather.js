@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
-// import Navigation from '../navigation/BottomNav'
-// import TopNav from '../navigation/TopNav';
+import Navigation from '../navigation/BottomNav'
+import TopNav from '../navigation/TopNav';
 import fetchWeather from '../api/fetchWeather'
 import './Weather.scss';
 import cloudsImg from '../../assets/weatherStatus/clouds.png'
@@ -173,7 +173,7 @@ function Weather() {
         <>
         {apiData ? (
         <div className="content">
-            {/* <TopNav /> */}
+            <TopNav />
             {console.log('1', apiData)}
             <div className="wrapper">
                 <div className="weatherToday">
@@ -241,7 +241,7 @@ function Weather() {
         ) : (
             <p>loading</p>
         )}
-    {/* <Navigation/> */}
+    <Navigation/>
     </>
 );
 }

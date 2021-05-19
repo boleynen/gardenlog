@@ -3,6 +3,8 @@ import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 
+
+
 export default function Signup() {
   const emailRef = useRef()
   const passwordRef = useRef()
@@ -23,9 +25,9 @@ export default function Signup() {
       setError("")
       setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value)
-      history.push("/")
-    } catch {
-      setError("Failed to create an account")
+      history.push("/profile-setup")
+    } catch (error){
+      setError("Failed to create an account: " + error)
     }
 
     setLoading(false)

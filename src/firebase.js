@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import "firebase/auth"
+import "firebase/database"
 
 const app = firebase.initializeApp({
     // apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -11,6 +12,7 @@ const app = firebase.initializeApp({
     // measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
     apiKey: "AIzaSyBVjjXIUt5SZrEs9j8AKdyxBSwFoSWhNG4",
     authDomain: "gardenlog-app.firebaseapp.com",
+    databaseURL: "https://gardenlog-app-default-rtdb.europe-west1.firebasedatabase.app/",
     projectId: "gardenlog-app",
     storageBucket: "gardenlog-app.appspot.com",
     messagingSenderId: "511751385908",

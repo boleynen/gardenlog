@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
+import TopNav from './navigation/TopNav';
+import Navigation from './navigation/BottomNav'
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 
@@ -33,8 +35,8 @@ export default function UpdateProfile() {
       .then(() => {
         history.push("/")
       })
-      .catch(() => {
-        setError("Failed to update account")
+      .catch((error) => {
+        setError("Kon account niet updaten: " + error)
       })
       .finally(() => {
         setLoading(false)
@@ -44,9 +46,10 @@ export default function UpdateProfile() {
   return (
     <>
       <Card className="reg-login-wrap">
+      <TopNav />
         <Card.Body>
           <div className="reg-login">
-            <h2 className="text-center mb-4">Update Profile</h2>
+            <h2 className="text-center mb-4">Update Profiel</h2>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={handleSubmit}>
               <Form.Group id="email">
@@ -59,31 +62,33 @@ export default function UpdateProfile() {
                 />
               </Form.Group>
               <Form.Group id="password">
-                <Form.Label>Password</Form.Label>
+                <Form.Label>Wachtwoord</Form.Label>
                 <Form.Control
                   type="password"
                   ref={passwordRef}
-                  placeholder="Leave blank to keep the same"
+                  placeholder="Laat leeg voor hetzelfde wachtwoord"
                 />
               </Form.Group>
               <Form.Group id="password-confirm">
-                <Form.Label>Password Confirmation</Form.Label>
+                <Form.Label>Wachtwoord bevestigen</Form.Label>
                 <Form.Control
                   type="password"
                   ref={passwordConfirmRef}
-                  placeholder="Leave blank to keep the same"
+                  placeholder="Laat leeg voor hetzelfde wachtwoord"
                 />
               </Form.Group>
               <Button disabled={loading} className="w-100" type="submit">
-                Update
+                Updaten
               </Button>
+              <div className="w-100 text-center pt-5">
+                <Link to="/profile">Annuleer</Link>
+              </div>
             </Form>
           </div>
         </Card.Body>
+        <Navigation />
       </Card>
-      <div className="w-100 text-center mt-2">
-        <Link to="/">Cancel</Link>
-      </div>
+     
     </>
   )
 }

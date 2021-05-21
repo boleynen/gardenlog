@@ -7,6 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faExclamation } from '@fortawesome/free-solid-svg-icons';
 import ForecastBlock from './dashboard/ForecastBlock';
 import PlantListBlock from './dashboard/PlantListBlock';
+import app from "../firebase"
+
+const database = app.database();
+
+// TODO: state opslaan in local storage (state is terug leeg elke x bij page refresh)
+
 export default function Dashboard() {
   const [sensorData, setSensorData] = useState([
     {
@@ -28,26 +34,73 @@ export default function Dashboard() {
       color: '#FFDB5E',
     },
   ]);
+
   const [plantsData, setPlantsData] = useState([
     {
-      id: '1',
-      name: 'Aardappel',
-      image:
-        'https://lh5.googleusercontent.com/-rHwzEtgZf-g/Ugyx-M0w1MI/AAAAAAAACKs/3E862vV2t1g/s640/aardappel1.0-tahirmq-CCBYSA3.0.jpg',
-    },
-    {
-      id: '2',
-      name: 'Citroen',
-      image:
-        'https://www.fruitsnacks.be/media/cache/strip/uploads/media/5be03db7e8240/lemon-1117568-1280.jpg',
-    },
-    {
-      id: '3',
-      name: 'Braambes',
-      image:
-        'https://d2k6dqn3q0mgs.cloudfront.net/eyJrZXkiOiJwbGFudHNcLzUzODcuanBnIiwiZWRpdHMiOnsicm90YXRlIjpudWxsLCJyZXNpemUiOnsid2lkdGgiOjEyMDAsIndpdGhvdXRFbmxhcmdlbWVudCI6dHJ1ZX19LCJidWNrZXQiOiJtaWpudHVpbiJ9',
-    },
+      id: '',
+      name: '',
+      image: '',
+    }
   ]);
+
+  const [userPlants, setUserPlants] = useState([]);
+
+  const [allPlants, setAllPlants] = useState([])
+
+
+  Object.filter = (obj, predicate) => 
+    Object.keys(obj)
+          .filter( key => predicate(obj[key]) )
+          .reduce( (res, key) => (res[key] = obj[key], res), {} );
+
+  useEffect(() => {
+    const userId = app.auth().currentUser.uid
+    let ownedPlants = [''];
+
+      database.ref(`user_plants/` + userId).on('value', (data) => {
+        const plantsList = data.val();
+
+        for (const [plant, plantDetails] of Object.entries(plantsList)){
+          if(plantDetails.owned === true){
+            ownedPlants.push(
+              plantDetails.plant_id
+            )
+          }
+        }
+      });
+
+    var filteredPlantIds = Object.filter(ownedPlants, plant => plant != ""); 
+    setUserPlants(filteredPlantIds)
+
+    getAllPlants()
+
+  }, [])
+
+
+  function getAllPlants(){
+
+    let allPlantsList = [''];
+
+    database.ref(`plants/`).on('value', (data) => {
+      const plantsList = data.val();
+      
+      for (const [plant, plantDetails] of Object.entries(plantsList)){
+        allPlantsList.push(
+          plantDetails.id
+          )
+      }
+    })
+    
+    var filteredAllPlantList = Object.filter(allPlantsList, plant => plant != ""); 
+    setAllPlants(filteredAllPlantList)
+
+    showPlantList()
+  };
+
+  function showPlantList(){
+    console.log('user plants:', userPlants)
+    console.log('all plants:', allPlants)
+  }
 
   return (
     <>

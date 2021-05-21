@@ -18,7 +18,7 @@ export default function ProfileSetup() {
                 firstname: firstName,
                 lastname: lastName
               });
-            history.push("/")
+            history.push("/add-plants")
         }
 
         setUserData(firstnameRef.current.value, lastnameRef.current.value);

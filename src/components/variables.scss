@@ -1,4 +1,3 @@
-$button-color: #d4e1e7;
 @mixin default-paddings {
   padding-left: 2rem;
   padding-right: 2rem;
@@ -13,3 +12,14 @@ $button-color: #d4e1e7;
 @mixin border-top {
   border-bottom: solid 1px #f4f4f4;
 }
+
+$button-color: #d4e1e7;
+$light-green: #d2e4b6;
+$dark-green: #517956;
+$secondary-dark: #444444;
+$secondary-grey: #dcdcdc;
+$secondary-white: #f4f4f4;
+$accent-yellow: #ffdb5e;
+$accent-blue: #9ed3fc;
+$accent-red: #f88484;
+$default-font: 'Open Sans', sans-serif !important;

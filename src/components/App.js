@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute"
 import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile"
 import ProfileSetup from "./ProfileSetup"
+import AddPlants from "./AddPlants"
 import Profile from "./Profile"
 import Weather from "./weather/Weather"
 import Calendar from "./Calendar"
@@ -28,6 +29,7 @@ function App() {
               <PrivateRoute path="/calendar" component={Calendar} />
               <PrivateRoute path="/update-profile" component={UpdateProfile} />
               <PrivateRoute path="/profile-setup" component={ProfileSetup} />
+              <PrivateRoute path="/add-plants" component={AddPlants} />
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} />

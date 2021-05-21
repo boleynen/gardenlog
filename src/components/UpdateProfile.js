@@ -45,7 +45,7 @@ export default function UpdateProfile() {
 
   return (
     <>
-      <Card className="reg-login-wrap">
+      <Card className="form-wrap">
       <TopNav />
         <Card.Body>
           <div className="reg-login">

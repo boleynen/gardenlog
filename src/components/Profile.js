@@ -26,7 +26,7 @@ export default function Dashboard() {
     <div className="content-wrapper">
       <Container className="content">
       <TopNav />
-        <Card className="reg-login-wrap">
+        <Card className="form-wrap">
           <Card.Body>
             <div className="reg-login">
               <h2 className="text-center mb-4">Mijn profiel</h2>

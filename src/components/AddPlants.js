@@ -1,5 +1,5 @@
 import React, { useRef,  useEffect, useState} from 'react';
-import { Form, Button, Container } from "react-bootstrap"
+import { Form, Button, Card } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 import app from "../firebase"
 import './AddPlants.scss';
@@ -98,31 +98,33 @@ export default function AddPlants() {
 
     return(
         <>
-        <Container className="wrapper">
-            <h1 className="introTitle">Welke plantjes heb je?</h1>
-            <Form onSubmit={handleSubmit}>
-                {plantsListState.map((plant, index) => (
-                    <div key={index} className="selectPlant">
-                        <div className="selectPlant__img">
-                            <img src={`${plant.img}`} alt={`${plant.name}`} />
+        <Card className="form-wrap">
+            <Card.Body>
+                <h2 className="introTitle">Welke plantjes heb je?</h2>
+                <Form onSubmit={handleSubmit}>
+                    {plantsListState.map((plant, index) => (
+                        <div key={index} className="selectPlant">
+                            <div className="selectPlant__img">
+                                <img src={`${plant.img}`} alt={`${plant.name}`} />
+                            </div>
+                            <Form.Check 
+                                custom
+                                checked = {plant.checked}
+                                type= 'checkbox'
+                                value = {plant.checked}
+                                id = {`${plant.id}`}
+                                className="selectPlant__checkbox"
+                                label={`${plant.name}`}
+                                onChange={handleChange}
+                            />
                         </div>
-                        <Form.Check 
-                            custom
-                            checked = {plant.checked}
-                            type= 'checkbox'
-                            value = {plant.checked}
-                            id = {`${plant.id}`}
-                            className="selectPlant__checkbox"
-                            label={`${plant.name}`}
-                            onChange={handleChange}
-                        />
-                    </div>
-                ))}
-                <Button className="w-100" variant="link" type="submit">
-                    Voltooi
-                </Button>
-            </Form>
-        </Container>
+                    ))}
+                    <Button className="w-100 btn-dark mt-3" variant="link" type="submit">
+                        Voltooi
+                    </Button>
+                </Form>
+            </Card.Body>
+        </Card>
         
         </>
     )

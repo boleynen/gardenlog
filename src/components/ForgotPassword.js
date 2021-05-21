@@ -28,7 +28,7 @@ export default function ForgotPassword() {
 
   return (
     <>
-      <Card className="reg-login-wrap">
+      <Card className="form-wrap">
         <Card.Body>
           <div className="reg-login">
             <h2 className="text-center mb-4">Password Reset</h2>

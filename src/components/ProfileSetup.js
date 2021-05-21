@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
-import { Form, Button, Container } from "react-bootstrap"
+import { Form, Button, Card } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 import app from "../firebase"
+import "./ProfileSetup.scss"
 
 const database = app.database();
 
@@ -26,8 +27,9 @@ export default function ProfileSetup() {
 
     return(
         <>
-        <Container className="wrapper">
-            <h1>Wie ben je ?</h1>
+        <Card className="form-wrap">
+            <Card.Body>
+            <h2 className="introTitle">Wie ben je ?</h2>
             <Form onSubmit={handleSubmit}>
                 <Form.Group id="firstname">
                     <Form.Label>Voornaam</Form.Label>
@@ -37,12 +39,13 @@ export default function ProfileSetup() {
                     <Form.Label>Achternaam</Form.Label>
                     <Form.Control type="lastname" ref={lastnameRef} required />
                 </Form.Group>
-                <Button className="w-100 mt-2 btn" type="submit">
+                <Button className="w-100 mt-3 btn-dark" type="submit">
                     Verder
                 </Button>
 
             </Form>
-        </Container>
+            </Card.Body>
+        </Card>
         
         </>
     )

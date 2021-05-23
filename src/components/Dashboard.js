@@ -7,6 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faExclamation } from '@fortawesome/free-solid-svg-icons';
 import ForecastBlock from './dashboard/ForecastBlock';
 import PlantListBlock from './dashboard/PlantListBlock';
+import app from "../firebase"
+
+
+// TODO: state opslaan in local storage (state is terug leeg elke x bij page refresh)
+
 export default function Dashboard() {
   const [sensorData, setSensorData] = useState([
     {
@@ -28,38 +33,81 @@ export default function Dashboard() {
       color: '#FFDB5E',
     },
   ]);
-  const [plantsData, setPlantsData] = useState([
-    {
-      id: '1',
-      name: 'Aardappel',
-      image:
-        'https://lh5.googleusercontent.com/-rHwzEtgZf-g/Ugyx-M0w1MI/AAAAAAAACKs/3E862vV2t1g/s640/aardappel1.0-tahirmq-CCBYSA3.0.jpg',
-    },
-    {
-      id: '2',
-      name: 'Citroen',
-      image:
-        'https://www.fruitsnacks.be/media/cache/strip/uploads/media/5be03db7e8240/lemon-1117568-1280.jpg',
-    },
-    {
-      id: '3',
-      name: 'Braambes',
-      image:
-        'https://d2k6dqn3q0mgs.cloudfront.net/eyJrZXkiOiJwbGFudHNcLzUzODcuanBnIiwiZWRpdHMiOnsicm90YXRlIjpudWxsLCJyZXNpemUiOnsid2lkdGgiOjEyMDAsIndpdGhvdXRFbmxhcmdlbWVudCI6dHJ1ZX19LCJidWNrZXQiOiJtaWpudHVpbiJ9',
-    },
-  ]);
+  const [plantsData, setPlantsData] = useState([]);
+
+  const database = app.database();
+  const userId = app.auth().currentUser.uid
+  let databaseRef = database.ref(`user_plants/` + userId)
+  let databasePlantsRef = database.ref(`plants/`)
+
+  // functie voor lege values in objecten eruit te filteren
+  Object.filter = (obj, predicate) => 
+    Object.keys(obj)
+          .filter( key => predicate(obj[key]) )
+          .reduce( (res, key) => (res[key] = obj[key], res), {} );
+
+  useEffect(() => {
+    const responseIds = []
+    databaseRef.on('value', (data) =>{
+      const userPlantIds = data.val();
+      // console.log(userPlantIds)
+
+      for (const [plant, plantDetails] of Object.entries(userPlantIds)){
+        if(plantDetails.owned === true){
+          responseIds.push(
+            plantDetails.plant_id
+            )
+          }
+        }
+        // console.log('responseIds', responseIds)
+    })
+
+    const responseFilteredPlants = []
+    databasePlantsRef.on('value', (data) =>{
+      const plantsById = data.val();
+
+      for (const [plant, plantDetails] of Object.entries(plantsById)){
+        // console.log(plant, plantDetails)
+
+        responseIds.forEach(function(id){
+          if(id === plantDetails.id){
+            responseFilteredPlants.push(
+              plantDetails
+            )
+          }
+        })
+      }
+        // console.log('responseFilteredPlants', responseFilteredPlants)
+    })
+
+    setPlantsData(responseFilteredPlants)
+    console.log(plantsData)
+
+  }, [])
 
   return (
     <>
       <div className='content-wrapper'>
         <div className='content'>
-          <TopNav />
-          <ForecastBlock />
-          <SensorDataBlock sensorData={sensorData} />
-          <PlantListBlock plantsData={plantsData} />
+        {plantsData != "" ? (
+          <>
+            <TopNav />
+            <ForecastBlock />
+            <SensorDataBlock sensorData={sensorData} />
+            {plantsData && <PlantListBlock plantsData={plantsData} />}
+          </>
+          ) : (
+            <>
+              <TopNav />
+              <ForecastBlock />
+              <SensorDataBlock sensorData={sensorData} />
+              <p>Plantsdata is empty</p>
+            </>
+          )}
         </div>
         <Navigation />
       </div>
     </>
   );
+
 }

@@ -11,6 +11,7 @@ function PlantListBlock(props) {
     <div className={'plantListBlock'}>
       <h1 className={'plantListBlock__title'}>Mijn planten</h1>
       <ul className={'plantListBlock__list'}>
+        {/* {console.log(plantsData)} */}
         {plantsData.map((plant, index) => {
           return <PlantListItem key={index} plant={plant} />;
         })}

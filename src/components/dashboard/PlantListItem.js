@@ -7,7 +7,7 @@ function PlantListItem(props) {
   // console.log(plant);
   return (
     <li className={'plantListItem'}>
-      <img className={'plantListItem__img'} src={plant.image} alt='' />
+      <img className={'plantListItem__img'} src={plant.img} alt='' />
       <h1 className={'plantListItem__title'}>{plant.name}</h1>
     </li>
   );

@@ -9,7 +9,6 @@ import ForecastBlock from './dashboard/ForecastBlock';
 import PlantListBlock from './dashboard/PlantListBlock';
 import app from "../firebase"
 
-const database = app.database();
 
 // TODO: state opslaan in local storage (state is terug leeg elke x bij page refresh)
 
@@ -34,85 +33,81 @@ export default function Dashboard() {
       color: '#FFDB5E',
     },
   ]);
+  const [plantsData, setPlantsData] = useState([]);
 
-  const [plantsData, setPlantsData] = useState([
-    {
-      id: '',
-      name: '',
-      image: '',
-    }
-  ]);
+  const database = app.database();
+  const userId = app.auth().currentUser.uid
+  let databaseRef = database.ref(`user_plants/` + userId)
+  let databasePlantsRef = database.ref(`plants/`)
 
-  const [userPlants, setUserPlants] = useState([]);
-
-  const [allPlants, setAllPlants] = useState([])
-
-
+  // functie voor lege values in objecten eruit te filteren
   Object.filter = (obj, predicate) => 
     Object.keys(obj)
           .filter( key => predicate(obj[key]) )
           .reduce( (res, key) => (res[key] = obj[key], res), {} );
 
   useEffect(() => {
-    const userId = app.auth().currentUser.uid
-    let ownedPlants = [''];
+    const responseIds = []
+    databaseRef.on('value', (data) =>{
+      const userPlantIds = data.val();
+      // console.log(userPlantIds)
 
-      database.ref(`user_plants/` + userId).on('value', (data) => {
-        const plantsList = data.val();
-
-        for (const [plant, plantDetails] of Object.entries(plantsList)){
-          if(plantDetails.owned === true){
-            ownedPlants.push(
-              plantDetails.plant_id
+      for (const [plant, plantDetails] of Object.entries(userPlantIds)){
+        if(plantDetails.owned === true){
+          responseIds.push(
+            plantDetails.plant_id
             )
           }
         }
-      });
+        // console.log('responseIds', responseIds)
+    })
 
-    var filteredPlantIds = Object.filter(ownedPlants, plant => plant != ""); 
-    setUserPlants(filteredPlantIds)
+    const responseFilteredPlants = []
+    databasePlantsRef.on('value', (data) =>{
+      const plantsById = data.val();
 
-    getAllPlants()
+      for (const [plant, plantDetails] of Object.entries(plantsById)){
+        // console.log(plant, plantDetails)
+
+        responseIds.forEach(function(id){
+          if(id === plantDetails.id){
+            responseFilteredPlants.push(
+              plantDetails
+            )
+          }
+        })
+      }
+        // console.log('responseFilteredPlants', responseFilteredPlants)
+    })
+
+    setPlantsData(responseFilteredPlants)
+    console.log(plantsData)
 
   }, [])
-
-
-  function getAllPlants(){
-
-    let allPlantsList = [''];
-
-    database.ref(`plants/`).on('value', (data) => {
-      const plantsList = data.val();
-      
-      for (const [plant, plantDetails] of Object.entries(plantsList)){
-        allPlantsList.push(
-          plantDetails.id
-          )
-      }
-    })
-    
-    var filteredAllPlantList = Object.filter(allPlantsList, plant => plant != ""); 
-    setAllPlants(filteredAllPlantList)
-
-    showPlantList()
-  };
-
-  function showPlantList(){
-    console.log('user plants:', userPlants)
-    console.log('all plants:', allPlants)
-  }
 
   return (
     <>
       <div className='content-wrapper'>
         <div className='content'>
-          <TopNav />
-          <ForecastBlock />
-          <SensorDataBlock sensorData={sensorData} />
-          <PlantListBlock plantsData={plantsData} />
+        {plantsData != "" ? (
+          <>
+            <TopNav />
+            <ForecastBlock />
+            <SensorDataBlock sensorData={sensorData} />
+            {plantsData && <PlantListBlock plantsData={plantsData} />}
+          </>
+          ) : (
+            <>
+              <TopNav />
+              <ForecastBlock />
+              <SensorDataBlock sensorData={sensorData} />
+              <p>Plantsdata is empty</p>
+            </>
+          )}
         </div>
         <Navigation />
       </div>
     </>
   );
+
 }

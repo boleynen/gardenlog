@@ -165,9 +165,9 @@ function Weather() {
         }
       );
 
-    if (!apiData){
-        return <h1>Failed to get weather data</h1>
-    }
+    // if (!apiData){
+    //     return <h1>Failed to get weather data</h1>
+    // }
     
     return (
         <>

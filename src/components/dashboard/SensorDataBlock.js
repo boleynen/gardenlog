@@ -4,12 +4,17 @@ import ButtonMedium from '../navigation/ButtonMedium';
 import './SensorDataBlock.scss';
 function SensorDataBlock(props) {
   // Declare a new state variables
+  const sensorData = props.sensorData;
   return (
     <div className={'sensorDataBlock'}>
-      <SensorCardList sensorData={props.sensorData} />
-      <h3 className={'sensorDataBlock__message'}>
-        Je planten hebben dorst, geef ze water!
-      </h3>
+      <SensorCardList key={props.sensorData} sensorData={props.sensorData} />
+        {sensorData.map((sensor, index) => {
+          return (
+            <h3 key={index} className={'sensorDataBlock__message'}>
+              {sensor.status}
+            </h3>
+          );
+        })}
       <ButtonMedium buttonText={'Notitie toevoegen'} />
     </div>
   );

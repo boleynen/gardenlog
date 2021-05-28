@@ -7,6 +7,12 @@
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   padding-top: 1.5rem;
+  cursor: pointer;
+  transition: all .5s;
+  
+  &:hover{
+    transform: scale(1.05)
+  }
   &__data {
     font-size: 2rem;
     font-weight: bold;
@@ -18,7 +24,7 @@
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
     background-color: white;
     position: relative;
-    top: 10px;
+    top: 17px;
     border-radius: 50px;
     width: 32px;
     height: 32px;
@@ -29,4 +35,13 @@
   &__icon > * {
     color: inherit;
   }
+}
+
+
+.warning{
+  border: 2px solid red;
+}
+
+.safe{
+  border: none;
 }

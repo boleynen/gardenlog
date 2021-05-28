@@ -10,12 +10,12 @@ function SensorCard(props) {
   const [color, setColor] = useState('');
   let colorStyle = { color: props.color };
   return (
-    <div className={'sensorCard'}>
+    <div className={`sensorCard  ${props.class}`}>
       <h1 style={colorStyle} className={'sensorCard__data'}>
         {props.data}
       </h1>
       <p className={'sensorCard__title'}>{props.title}</p>
-      <div className={'sensorCard__iconWrapper'}>
+      <div className={`sensorCard__iconWrapper ${props.class}`}>
         <FontAwesomeIcon
           className={'sensorCard__icon'}
           style={colorStyle}

@@ -15,6 +15,7 @@ function SensorCardList(props) {
             title={sensor.title}
             icon={sensor.icon}
             color={sensor.color}
+            class={sensor.class}
           />
         );
       })}

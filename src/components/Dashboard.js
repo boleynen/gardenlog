@@ -51,7 +51,7 @@ export default function Dashboard() {
     databaseRef.on('value', (data) =>{
       const userPlantIds = data.val();
       // console.log(userPlantIds)
-
+      
       for (const [plant, plantDetails] of Object.entries(userPlantIds)){
         if(plantDetails.owned === true){
           responseIds.push(
@@ -67,7 +67,6 @@ export default function Dashboard() {
       const plantsById = data.val();
 
       for (const [plant, plantDetails] of Object.entries(plantsById)){
-        // console.log(plant, plantDetails)
 
         responseIds.forEach(function(id){
           if(id === plantDetails.id){

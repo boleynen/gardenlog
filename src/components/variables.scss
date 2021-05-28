@@ -1,6 +1,10 @@
 @mixin default-paddings {
   padding-left: 2rem;
   padding-right: 2rem;
+  @media screen and (min-width: 800px) {
+    padding-left: 30%;
+    padding-right: 30%;
+  }
   @media screen and (min-width: 1450px) {
     padding-left: 30rem;
     padding-right: 30rem;

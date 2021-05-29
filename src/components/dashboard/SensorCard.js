@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './SensorCard.scss';
+import { Link } from "react-router-dom"
+
 
 function SensorCard(props) {
   // Declare a new state variables
@@ -10,7 +12,7 @@ function SensorCard(props) {
   const [color, setColor] = useState('');
   let colorStyle = { color: props.color };
   return (
-    <div className={`sensorCard  ${props.class}`}>
+    <Link to="/sensor-details" className={`sensorCard  ${props.class}`}>
       <h1 style={colorStyle} className={'sensorCard__data'}>
         {props.data}
       </h1>
@@ -20,9 +22,9 @@ function SensorCard(props) {
           className={'sensorCard__icon'}
           style={colorStyle}
           icon={props.icon}
-        />
+          />
       </div>
-    </div>
+    </Link>
   );
 }
 

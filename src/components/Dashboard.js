@@ -87,11 +87,11 @@ export default function Dashboard() {
       const waterValuesArr = Object.values(waterValues)
       const water = waterValuesArr[waterValuesArr.length - 1]
 
-      if(water<=20){
+      if(water<=100){
         waterIcon = faExclamation
         waterClass = 'warning'
         waterMessage = 'Je planten hebben dorst. Geef ze water!!'
-      }else if(water > 200){
+      }else if(water > 500){
         waterIcon = faExclamation
         waterClass = 'warning'
         waterMessage = 'Geef je planten zeker niet nog water, ze verdrinken bijna!'
@@ -103,15 +103,15 @@ export default function Dashboard() {
       
       setSensorData([
         {
-          data: '23°',
+          data: '?',
           title: 'Temperatuur',
-          icon: faHeart,
+          icon: faExclamation,
           color: '#F88484',
           class: 'safe',
           status: tempMessage
         },
         {
-          data: water+'%',
+          data: (water/10)+'%',
           title: 'Vochtigheid',
           icon: waterIcon,
           color: '#9ED3FC',
@@ -119,9 +119,9 @@ export default function Dashboard() {
           status: waterMessage
         },
         {
-          data: '89%',
+          data: '?',
           title: 'Licht',
-          icon: faHeart,
+          icon: faExclamation,
           color: '#FFDB5E',
           class: 'safe',
           status: lightMessage

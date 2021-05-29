@@ -1,0 +1,29 @@
+@import '../variables.scss';
+.sensorDetailsData {
+  @include default-paddings;
+  padding-top: 1rem;
+
+  &__status{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      @include border-bottom;
+
+      > div{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+
+        h1{
+          font-weight: bold;
+        }
+      }
+  }
+
+  &__desc{
+    @include border-bottom;
+    padding: 1rem 0rem;
+    font-size: 13px;
+  }
+}

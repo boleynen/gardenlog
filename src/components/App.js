@@ -10,18 +10,16 @@ import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile"
 import ProfileSetup from "./ProfileSetup"
 import AddPlants from "./AddPlants"
+import SensorDetails from "./dashboard/SensorDetails"
 import Profile from "./Profile"
 import Weather from "./weather/Weather"
 import Calendar from "./Calendar"
-// import TopNav from '../components/navigation/TopNav';
-// import Navigation from '../components/navigation/BottomNav'
 import './../style.css';
 
 function App() {
   return (
         <Router>
           <AuthProvider>
-            {/* <TopNav/> */}
             <Switch>
               <PrivateRoute exact path="/" component={Dashboard} />
               <PrivateRoute path="/profile" component={Profile} />
@@ -30,11 +28,11 @@ function App() {
               <PrivateRoute path="/update-profile" component={UpdateProfile} />
               <PrivateRoute path="/profile-setup" component={ProfileSetup} />
               <PrivateRoute path="/add-plants" component={AddPlants} />
+              <PrivateRoute path="/sensor-details" component={SensorDetails} />
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} />
             </Switch>
-            {/* <Navigation/> */}
           </AuthProvider>
         </Router>
   )

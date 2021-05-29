@@ -1,0 +1,5 @@
+@import '../variables.scss';
+.sensorDetailsGraph {
+  @include default-paddings;
+  padding-top: 1rem;
+}

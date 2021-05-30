@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import LineChart from './LineChart'
 import './SensorDetailsGraph.scss'
 
 function SensorDetailsGraph(props) {
@@ -7,7 +8,7 @@ function SensorDetailsGraph(props) {
     return (
       <>
       <div className={"sensorDetailsGraph"}>
-         <p>hier komt de grafiek</p>
+         <LineChart />
       </div>
       </>
     );

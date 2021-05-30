@@ -127,7 +127,7 @@ export default function Dashboard() {
           status: lightMessage
         },
       ])
-      // console.log(sensorData)
+      console.log(sensorData)
     })
 
   }, [])

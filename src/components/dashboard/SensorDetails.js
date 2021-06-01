@@ -5,14 +5,18 @@ import SensorDetailsData from './SensorDetailsData';
 import SensorDetailsGraph from './SensorDetailsGraph';
 
 function SensorDetails(props) {
+  const data = props.location.data;
+  const title = props.location.title;
+  const color = props.location.color;
+  const waterData = props.location.waterData;
 
   return (
     <>
     <div className='content-wrapper'>
         <TopNav />
       <div className='content'>
-        <SensorDetailsData/>
-        <SensorDetailsGraph/>
+        <SensorDetailsData data={data} title={title} color={color}/>
+        <SensorDetailsGraph waterData={waterData} color={color}/>
 
       </div>
       <Navigation />

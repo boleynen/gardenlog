@@ -11,8 +11,13 @@ function SensorCard(props) {
   const [icon, setIcon] = useState('');
   const [color, setColor] = useState('');
   let colorStyle = { color: props.color };
+
   return (
-    <Link to="/sensor-details" className={`sensorCard  ${props.class}`}>
+    <Link className={`sensorCard  ${props.class}`}
+          to={{pathname:"/sensor-details",  data: props.data, 
+                                            title: props.title,
+                                            color: props.color,
+                                            waterData: props.waterData }}>
       <h1 style={colorStyle} className={'sensorCard__data'}>
         {props.data}
       </h1>

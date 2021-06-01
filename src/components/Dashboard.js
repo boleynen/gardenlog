@@ -127,12 +127,12 @@ export default function Dashboard() {
           status: lightMessage
         },
       ])
-      // console.log(sensorData)
     })
+
 
   }, [])
 
-
+  // console.log(waterData)
   return (
     <>
       <div className='content-wrapper'>
@@ -141,7 +141,7 @@ export default function Dashboard() {
           <ForecastBlock />
 
           {sensorData != "" ? (
-              sensorData && <SensorDataBlock sensorData={sensorData} />
+              sensorData && <SensorDataBlock sensorData={sensorData} waterData={waterData}/>
           ) : (
               <p>We konden geen data ophalen.</p>
           )}

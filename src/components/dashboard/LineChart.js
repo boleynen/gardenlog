@@ -3,14 +3,9 @@ import { Line } from 'react-chartjs-2'
 
 function LineChart(props){
     let [waterData, setWaterData] = useState(props.waterData)
-    let [waterDataKeys, setWaterDataKeys] = useState([]);
-    let [waterDataValues, setWaterDataValues] = useState([]);
-    let [waterDataHours, setWaterDataHours] = useState([]);
     let [graphHours, setGraphHours] = useState([]);
-    let [graphValues, setGraphValues] = useState([]);
-
     let [data, setData] = useState({
-        labels: graphHours,
+        labels: ["02:00","04:00","06:00","08:00","10:00","12:00","14:00","16:00","18:00","20:00","22:00","24:00"],
         datasets: [{
             label: '',
             data: [],
@@ -22,8 +17,6 @@ function LineChart(props){
     let color = props.color;
 
     let hoursArray = [];
-    let hoursInGraph = [];
-    let valuesInGraph = [];
 
     const unixToTime = (u) =>{
         var timestamp = u; // UNIX timestamp in seconds
@@ -33,63 +26,41 @@ function LineChart(props){
     }
     
     useEffect(() => {
-        setWaterDataKeys(Object.keys(waterData));
-        setWaterDataValues(Object.values(waterData));
         
-        waterDataKeys.map((key) => {
-            let time = unixToTime(key)
-            hoursArray.push(time.slice(0,5))
+        var d = new Date();
+        d.setHours(0,0,0,0); // last midnight
+        let lastMidnight = d.getTime()/1000;
+
+        Object.keys(waterData).map((key) => {
+            if(key > lastMidnight ){
+                let time = unixToTime(key)
+                time = time.slice(0,5)
+                if(time == "02:00" || time == "04:00" || time == "06:00" || time == "08:00" || time == "10:00" || time == "12:00" || time == "14:00" || time == "16:00" || time == "18:00" || time == "20:00" || time == "22:00" || time == "24:00"){
+                    hoursArray.push(time)
+                }
+            }
         })
 
-        let waterDataHoursSet = [...new Set(hoursArray)]
-        hoursArray = waterDataHoursSet;
-        console.log('hours:', hoursArray)
+        hoursArray = [...new Set(hoursArray)]
 
-        setWaterDataHours(hoursArray);
-
-        console.log(hoursArray)
-        
-        // console.log(waterDataValues)
-
-        // for(let i=0; i<hoursArray.length; i+=30){
-        //     // console.log('f;', waterDataHours[i])
-        //     hoursInGraph.push(hoursArray[i])
-        // }
-
-        // for(let i=0; i<waterDataValues.length; i+=30){
-        //     // console.log('f;', waterDataValues[i])
-        //     valuesInGraph.push(waterDataValues[i])
-        // }
-
-        // console.log(Object.keys(waterData))
-
-        // setGraphHours(hoursInGraph)
-        // setGraphValues(valuesInGraph)
-
-        // console.log(lastTime, lastValues)
-        
-
-
-        
-
-
-        setData({
+        data = {
             labels: hoursArray,
             datasets: [{
                 label: 'Vochtigheid',
-                data: props.waterData,
+                // data: props.waterData,
+                data: [1,2,3,4,5,6,7,8,9,10],
                 borderColor: color,
                 tension: 0.3,
                 borderWidth: 4,
             }]
-        })
-    }, [])
+        }
 
+        setData(data)
+
+    }, [])
 
     return(
         <>
-        {/* <Line data={data}/> */}
-
         {data != "" ? (
             data && <Line data={data}/>
         ) : (

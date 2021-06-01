@@ -6,7 +6,7 @@ function SensorDetailsGraph(props) {
     let waterData = props.waterData;
     let color = props.color;
   
-    console.log(waterData)
+    // console.log(waterData)
     return (
       <>
       <div className={"sensorDetailsGraph"}>

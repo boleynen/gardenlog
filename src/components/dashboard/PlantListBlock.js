@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PlantListItem from './PlantListItem';
 import ButtonMedium from '../navigation/ButtonMedium';
+import { Link } from "react-router-dom"
 import './PlantListBlock.scss';
 
 function PlantListBlock(props) {
@@ -13,7 +14,11 @@ function PlantListBlock(props) {
       <ul className={'plantListBlock__list'}>
         {/* {console.log(plantsData)} */}
         {plantsData.map((plant, index) => {
-          return <PlantListItem key={index} plant={plant} />;
+          return(
+          <Link key={index} to={{pathname:"/plant-details", plantsData: plant}}>
+            <PlantListItem plant={plant} />
+          </Link>
+          )
         })}
       </ul>
       <ButtonMedium buttonText={'Plant toevoegen'} />

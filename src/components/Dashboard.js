@@ -91,7 +91,7 @@ export default function Dashboard() {
         waterIcon = faExclamation
         waterClass = 'warning'
         waterMessage = 'Je planten hebben dorst. Geef ze water!!'
-      }else if(water > 500){
+      }else if(water > 1000){
         waterIcon = faExclamation
         waterClass = 'warning'
         waterMessage = 'Geef je planten zeker niet nog water, ze verdrinken bijna!'

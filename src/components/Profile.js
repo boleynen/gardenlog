@@ -42,17 +42,21 @@ export default function Dashboard() {
     <div className="content-wrapper">
       <TopNav pageTitle="Profiel"/>
         <div className="content profile">
+          <div className="profile__profilePicture">
+            <img src="#" alt="#" />
+          </div>
           {user != "" ? (
             <h2 className="">{user}</h2>
           ): (
             <p>Loading</p>
             )}
             {error && <Alert variant="danger">{error}</Alert>}
-          <strong>Email:</strong> {currentUser.email}
+          <p>Email</p>
+          <strong><p>{currentUser.email}</p></strong>
           <Link to="/update-profile" className="w-100 text-center btn btn-primary">
           Update profiel
           </Link>
-          <div className="w-100 text-center mt-2 logout">
+          <div className="w-100 text-center logout">
             <Button variant="link" onClick={handleLogout}>
                 Uitloggen
             </Button>

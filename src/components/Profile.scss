@@ -2,4 +2,46 @@
 .content.profile{
     @include default-paddings;
     margin-top: 50px;
+
+    h2{
+        font-weight: bold;
+        font-size: 25px;
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    p{
+        margin-bottom: 0;
+    }
+
+    a.btn{
+        padding: 10px 0px;
+        background-color: var(--light-green);
+        color: var(--secondary-dark);
+        border: none;
+        text-transform: uppercase;
+        font-weight: bold;
+        transition: transform 0.5s;
+        margin-top: 50px;
+
+        &:hover{
+            transform: scale(1.05);
+        }
+
+        &:active, &:focus-within, &:focus{
+            background-color: var(--light-green);
+            border: none;
+            color: var(--secondary-dark);
+            box-shadow: none !important;
+        }
+    }
+
+    button{
+        background-color: none;
+        color: var(--accent-red);
+    }
+
+    .logout{
+        margin-top: 20px;
+    }
 }

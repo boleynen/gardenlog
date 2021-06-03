@@ -15,6 +15,7 @@
   &__btnBack {
     display: flex;
     align-items: center;
+    cursor: pointer;
   }
   &__pageTitle {
     font-size: 1.2rem;
@@ -24,6 +25,22 @@
     position: relative;
     font-weight: bold;
     left: -18px;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .topNav{
+    padding: 1.5rem 0px 1.5rem 20px;
+    justify-content: flex-start;
+
+    &__btnBack::after{
+      content: "Terug";
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: bold;
+      margin-left: 10px;
+      padding-top: 1px;
+    }
   }
 }
 .fa-angle-left {

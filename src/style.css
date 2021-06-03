@@ -127,15 +127,4 @@ body {
   }
 }
 
-.logout .btn {
-  background-color: var(--accent-red);
-  color: white;
-  border: none;
-  width: 100%;
-}
-
-.logout .btn:hover {
-  background-color: var(--accent-red);
-  color: white;
-}
 

@@ -2,4 +2,28 @@
 .updateProfile{
     @include default-paddings;
     margin-top: 50px;
+
+    .btn{
+        padding: 10px 0px;
+        background-color: var(--light-green);
+        color: var(--secondary-dark);
+        border: none;
+        text-transform: uppercase;
+        font-weight: bold;
+        transition: transform 0.5s;
+        margin-top: 50px;
+
+        &:hover{
+            transform: scale(1.05);
+            background-color: var(--light-green);
+            color: var(--secondary-dark);
+        }
+
+        &:active, &:focus-within, &:focus{
+            background-color: var(--light-green);
+            border: none;
+            color: var(--secondary-dark);
+            box-shadow: none !important;
+        }
+    }
 }

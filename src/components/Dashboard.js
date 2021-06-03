@@ -136,8 +136,8 @@ export default function Dashboard() {
   return (
     <>
       <div className='content-wrapper'>
+        <TopNav pageTitle="Mijn tuin"/>
         <div className='content'>
-          <TopNav />
           <ForecastBlock />
 
           {sensorData != "" ? (

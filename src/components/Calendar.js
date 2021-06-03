@@ -7,9 +7,9 @@ function Calendar() {
     return (
         <>
             <div className="content-wrapper">
+                <TopNav  pageTitle={"Kalender"}/>
                 <div className="content">
-                    <TopNav />
-                    <h1>Kalender</h1>
+                    <h1>hier komt kalender content</h1>
                 </div>
                 <Navigation/>
             </div>

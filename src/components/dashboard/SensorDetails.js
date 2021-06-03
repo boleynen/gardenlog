@@ -13,7 +13,7 @@ function SensorDetails(props) {
   return (
     <>
     <div className='content-wrapper'>
-        <TopNav />
+      <TopNav  pageTitle={title}/>
       <div className='content'>
         <SensorDetailsData data={data} title={title} color={color}/>
         <SensorDetailsGraph waterData={waterData} color={color}/>

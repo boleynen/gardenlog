@@ -5,7 +5,7 @@ import './TopNav.scss';
 
 function TopNav(props) {
   // Declare a new state variables
-  const [pageTitle, setPageTitle] = useState('Mijn tuin');
+  const [pageTitle, setPageTitle] = useState(props.pageTitle);
 
   return (
     <div className={'topNav'}>

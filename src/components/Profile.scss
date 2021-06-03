@@ -1,0 +1,5 @@
+@import './variables.scss';
+.content.profile{
+    @include default-paddings;
+    margin-top: 50px;
+}

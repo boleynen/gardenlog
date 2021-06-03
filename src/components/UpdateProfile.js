@@ -4,6 +4,7 @@ import TopNav from './navigation/TopNav';
 import Navigation from './navigation/BottomNav'
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
+import './UpdateProfile.scss'
 
 export default function UpdateProfile() {
   const emailRef = useRef()
@@ -45,11 +46,9 @@ export default function UpdateProfile() {
 
   return (
     <>
-      <Card className="form-wrap">
-      <TopNav />
-        <Card.Body>
-          <div className="reg-login">
-            <h2 className="text-center mb-4">Update Profiel</h2>
+      <div className="content-wrapper">
+      <TopNav pageTitle={"Update profiel"}/>
+          <div className="content updateProfile">
             {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={handleSubmit}>
               <Form.Group id="email">
@@ -85,9 +84,8 @@ export default function UpdateProfile() {
               </div>
             </Form>
           </div>
-        </Card.Body>
         <Navigation />
-      </Card>
+      </div>
      
     </>
   )

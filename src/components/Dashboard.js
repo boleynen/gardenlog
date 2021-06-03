@@ -132,7 +132,7 @@ export default function Dashboard() {
 
   }, [])
 
-  // console.log(waterData)
+  console.log(plantsData)
   return (
     <>
       <div className='content-wrapper'>

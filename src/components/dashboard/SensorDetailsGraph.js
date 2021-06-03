@@ -38,11 +38,11 @@ function SensorDetailsGraph(props) {
       d.setHours(0,0,0,0);
       let lastMidnight = d.getTime()/1000;
 
-      // loop over timestamps in database, en kijk welke van vandaag zijn a.h.v laatste middernacht
-      Object.keys(waterData).map(function(key, index){
+      for (const [key, value] of Object.entries(waterData)) {
+        let time = unixToTime(key)
+        time = time.slice(0,5)
+
         if(key > lastMidnight ){
-          let time = unixToTime(key)
-          time = time.slice(0,5)
           if( time == "02:00" || 
               time == "04:00" || 
               time == "06:00" || 
@@ -56,10 +56,10 @@ function SensorDetailsGraph(props) {
               time == "22:00" || 
               time == "24:00"){
               hoursArray.push(time)
-              dataArray.push(index/10)
+              dataArray.push(value/10)
           }
-      }
-      })
+        }
+      };
 
       // verwijderd eventuele dubbele waardes
       hoursArray = [...new Set(hoursArray)]

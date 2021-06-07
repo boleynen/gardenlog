@@ -11,6 +11,7 @@ export default function Navigation() {
             <Link className="bottomNav__item home" to="/"></Link>
             <Link className="bottomNav__item calendar" to="/calendar"></Link>
             <Link className="bottomNav__item profile" to="/profile"></Link>
+            <Link className="bottomNav__item database" to="/plant-database"></Link>
         </div>
     </>
   )

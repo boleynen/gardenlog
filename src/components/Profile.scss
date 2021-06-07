@@ -2,7 +2,25 @@
 .content.profile{
     @include default-paddings;
     margin-top: 50px;
+}
 
+.profile{
+    &__profilePicture{
+        min-width: 100px;
+        min-height: 100px;
+        max-width: 100px;
+        max-height: 100px;
+        border-radius: 50px;
+        object-fit: cover;
+        overflow: hidden;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        img{
+            width: 100%;
+        }
+    }
+
+    
     h2{
         font-weight: bold;
         font-size: 25px;
@@ -43,23 +61,5 @@
 
     .logout{
         margin-top: 20px;
-    }
-
-}
-
-.profile{
-    &__profilePicture{
-        min-width: 100px;
-        min-height: 100px;
-        max-width: 100px;
-        max-height: 100px;
-        border-radius: 50px;
-        object-fit: cover;
-        overflow: hidden;
-        margin: 0 auto;
-        margin-bottom: 20px;
-        img{
-            width: 100%;
-        }
     }
 }

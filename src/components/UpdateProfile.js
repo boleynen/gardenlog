@@ -75,49 +75,49 @@ export default function UpdateProfile() {
   return (
     <>
       <div className="content-wrapper">
-      <TopNav pageTitle={"Update profiel"}/>
-          <div className="content updateProfile">
-            {error && <Alert variant="danger">{error}</Alert>}
-            <Form onSubmit={handleSubmit}>
-              <Form.Group id="email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  ref={emailRef}
-                  required
-                  defaultValue={currentUser.email}
-                />
-              </Form.Group>
-              <Form.Group id="password">
-                <Form.Label>Wachtwoord</Form.Label>
-                <Form.Control
-                  type="password"
-                  ref={passwordRef}
-                  placeholder="Laat leeg voor hetzelfde wachtwoord"
-                />
-              </Form.Group>
-              <Form.Group id="password-confirm">
-                <Form.Label>Wachtwoord bevestigen</Form.Label>
-                <Form.Control
-                  type="password"
-                  ref={passwordConfirmRef}
-                  placeholder="Laat leeg voor hetzelfde wachtwoord"
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.File  id="profilePicture" 
-                            label="Kies je profielfoto"
-                            onChange={(e) => setUserImage(e.target.files[0])} 
-                            />
-              </Form.Group>
-              <Button disabled={loading} className="w-100" type="submit">
-                Updaten
-              </Button>
-              <div className="w-100 text-center pt-5">
-                <Link to="/profile">Annuleer</Link>
-              </div>
-            </Form>
-          </div>
+        <TopNav pageTitle={"Update profiel"}/>
+        <div className="content updateProfile">
+          {error && <Alert variant="danger">{error}</Alert>}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group id="email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                ref={emailRef}
+                required
+                defaultValue={currentUser.email}
+              />
+            </Form.Group>
+            <Form.Group id="password">
+              <Form.Label>Wachtwoord</Form.Label>
+              <Form.Control
+                type="password"
+                ref={passwordRef}
+                placeholder="Laat leeg voor hetzelfde wachtwoord"
+              />
+            </Form.Group>
+            <Form.Group id="password-confirm">
+              <Form.Label>Wachtwoord bevestigen</Form.Label>
+              <Form.Control
+                type="password"
+                ref={passwordConfirmRef}
+                placeholder="Laat leeg voor hetzelfde wachtwoord"
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.File  id="profilePicture" 
+                          label="Kies je profielfoto"
+                          onChange={(e) => setUserImage(e.target.files[0])} 
+                          />
+            </Form.Group>
+            <Button disabled={loading} className="w-100" type="submit">
+              Updaten
+            </Button>
+            <div className="w-100 text-center pt-5">
+              <Link to="/profile">Annuleer</Link>
+            </div>
+          </Form>
+        </div>
         <Navigation />
       </div>
      

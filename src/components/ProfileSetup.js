@@ -64,7 +64,8 @@ export default function ProfileSetup() {
                     <Form.Group>
                         <Form.File  id="profilePicture" 
                                     label="Kies je profielfoto"
-                                    onChange={(e) => setUserImage(e.target.files[0])} 
+                                    onChange={(e) => setUserImage(e.target.files[0])}
+                                    required 
                                     />
                     </Form.Group>
                     <Button className="" type="submit">

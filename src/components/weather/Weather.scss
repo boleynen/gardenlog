@@ -2,6 +2,7 @@
 
 .content.weather{
     @include default-paddings;
+    margin-top: 50px;
 }
 
 @media screen and (min-width: 768px){

@@ -1,6 +1,7 @@
 import React from "react"
 import TopNav from './navigation/TopNav';
 import Navigation from './navigation/BottomNav'
+import PlantsInDatabase from './PlantsInDatabase'
 import './PlantDatabase.scss'
 
 export default function PlantDatabase(){
@@ -8,7 +9,7 @@ export default function PlantDatabase(){
         <div className="content-wrapper">
             <TopNav pageTitle={"Plant database"}/>
             <div className="content plantDatabase">
-            <h1>Plant database</h1>
+            <PlantsInDatabase/>
             </div>
             <Navigation/>
         </div>

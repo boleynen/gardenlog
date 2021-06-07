@@ -1,22 +1,38 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Form, Button, Card } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
-import app from "../firebase"
 import "./ProfileSetup.scss"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import app from "../firebase"
+import firebase from 'firebase';
 
-const database = app.database();
 
 export default function ProfileSetup() {
     const firstnameRef = useRef()
     const lastnameRef = useRef()
     const history = useHistory()
+    const [fileName, setFileName] = useState('');
+    const userId = app.auth().currentUser.uid
+
+    const database = app.database();
+    var storage = app.storage();
     
+    async function setUserImage(image){
+        // image naam veranderen naar --userId--.png
+        var blob = image.slice(0, image.size, 'image/png'); 
+        var newFile = new File([blob], `${userId}.png`, {type: 'image/png'});
+        // nieuwe image naam
+        let imageName = newFile.name;
+        // hier steek je het in de storage
+        storage.ref(`${userId}/` + imageName).put(newFile)
+    }
+
     async function handleSubmit(e) {
         e.preventDefault()
+        const userId = app.auth().currentUser.uid
+
         function setUserData(firstName, lastName){
-            const userId = app.auth().currentUser.uid
             database.ref(`users/`+ userId).set({
                 firstname: firstName,
                 lastname: lastName
@@ -44,6 +60,12 @@ export default function ProfileSetup() {
                     <Form.Group id="lastname">
                         <Form.Label>Achternaam</Form.Label>
                         <Form.Control type="lastname" ref={lastnameRef} required />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.File  id="profilePicture" 
+                                    label="Kies je profielfoto"
+                                    onChange={(e) => setUserImage(e.target.files[0])} 
+                                    />
                     </Form.Group>
                     <Button className="" type="submit">
                         Verder &nbsp; <FontAwesomeIcon icon={faAngleRight} />

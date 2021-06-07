@@ -12,10 +12,13 @@ export default function Dashboard() {
   const { currentUser, logout } = useAuth()
   const history = useHistory()
   const [user, setUser] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+  const userId = app.auth().currentUser.uid
 
   const database = app.database();
-  const userId = app.auth().currentUser.uid
+  const storage = app.storage();
   const databaseRef = database.ref(`users/` + userId)
+  // const storageRef = storage.ref(`${userId}/` + userId)
 
   async function handleLogout() {
     setError("")
@@ -35,22 +38,40 @@ export default function Dashboard() {
       var user = firstname + " " + lastname;
       setUser(user)
     })
+
+    storage.ref().child(`${userId}/${userId}.png`).getDownloadURL()
+    .then((url) => {
+      console.log(url)
+      setProfilePicture(url)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+
   }, [])
 
+  
   return (
     <>
     <div className="content-wrapper">
       <TopNav pageTitle="Profiel"/>
         <div className="content profile">
-          <div className="profile__profilePicture">
-            <img src="#" alt="#" />
-          </div>
+          {profilePicture != "" ? (
+            <div className="profile__profilePicture">
+              <img src={profilePicture} alt="profielfoto" />
+            </div>
+          ) : (
+            <p>geen profielfoto gevonden</p>
+          )}
+
           {user != "" ? (
             <h2 className="">{user}</h2>
           ): (
             <p>Loading</p>
-            )}
-            {error && <Alert variant="danger">{error}</Alert>}
+          )}
+
+          {error && <Alert variant="danger">{error}</Alert>}
+
           <p>Email</p>
           <strong><p>{currentUser.email}</p></strong>
           <Link to="/update-profile" className="w-100 text-center btn btn-primary">

@@ -56,6 +56,7 @@ export default function Dashboard() {
     <div className="content-wrapper">
       <TopNav pageTitle="Profiel"/>
         <div className="content profile">
+        
           {profilePicture != "" ? (
             <div className="profile__profilePicture">
               <img src={profilePicture} alt="profielfoto" />

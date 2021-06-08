@@ -17,7 +17,7 @@ function SensorDataBlock(props) {
             </h3>
           );
         })}
-      <ButtonMedium buttonText={'Notitie toevoegen'} />
+      <ButtonMedium buttonText={'Notitie toevoegen'} buttonLink={''} />
     </div>
   );
 }

@@ -21,7 +21,7 @@ function PlantListBlock(props) {
           )
         })}
       </ul>
-      <ButtonMedium buttonText={'Plant toevoegen'} />
+      <ButtonMedium buttonText={'Plant toevoegen'} buttonLink={'/plant-database'}/>
     </div>
   );
 }

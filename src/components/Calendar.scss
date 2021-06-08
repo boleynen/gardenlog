@@ -1,0 +1,9 @@
+@import './variables.scss';
+.content.calendar{
+    @include default-paddings;
+    margin-top: 50px;
+}
+
+.calendar{
+    
+}

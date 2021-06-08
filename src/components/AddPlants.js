@@ -1,4 +1,4 @@
-import React, { useRef,  useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { Form, Button, Card } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 import app from "../firebase"
@@ -6,6 +6,8 @@ import PlantsInDatabase from "./PlantsInDatabase"
 import './AddPlants.scss';
 
 export default function AddPlants() {
+
+    const [isDatabase, setIsDatabase] = useState(false)
 
     return(
         <>
@@ -16,7 +18,7 @@ export default function AddPlants() {
             </div>
             <div className="content addPlants">
                 <h2 className="">Welke plantjes heb je?</h2>
-                <PlantsInDatabase/>
+                <PlantsInDatabase isDatabase={isDatabase}/>
             </div>
         </div>
         

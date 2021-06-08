@@ -1,24 +1,28 @@
-import React, { useRef,  useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import { Form, Button, Card } from "react-bootstrap"
-import { useHistory } from "react-router-dom"
+import { useHistory, Link } from "react-router-dom"
 import app from "../firebase"
 import './AddPlants.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import PlantListItem from './dashboard/PlantListItem';
 
 const database = app.database();
 
-export default function PlantsInDatabase() {
+export default function PlantsInDatabase(props) {
     
     const history = useHistory()
     const [plantsListState, setPlantsListState] = useState([{
         'id' : "",
         'checked' : false,
     }]);
+    const [forDatabase, setForDatabase] = useState(props.isDatabase)
 
+    
     const newPlantsList = [];
-
+    
     useEffect(() => {
+        console.log(props.isDatabase)
         database.ref(`plants/`).on('value', (plantsList) => {
             const plants = plantsList.val();
 
@@ -94,7 +98,20 @@ export default function PlantsInDatabase() {
         addUserPlants()
     }
 
-    return(
+    const databasePlantsList = () => {
+        return(
+        <>
+        {plantsListState.map((plant, index) => (
+            <Link key={index} to={{pathname:"/plant-details", plantsData: plant}}>
+                <PlantListItem plant={plant}/>
+            </Link>
+        ))}
+        </>
+        )
+    }
+
+    const introAddPlantsList = () => {
+        return(
         <Form onSubmit={handleSubmit}>
             {plantsListState.map((plant, index) => (
                 <div key={index} className="selectPlant">
@@ -117,5 +134,17 @@ export default function PlantsInDatabase() {
                 Voltooi &nbsp; <FontAwesomeIcon icon={faAngleRight} />
             </Button>
         </Form>
+        )
+    }
+
+    return(
+        <>
+        {
+            forDatabase === false
+            ? introAddPlantsList()
+            : databasePlantsList()
+        }
+        </>
     )
+
 }

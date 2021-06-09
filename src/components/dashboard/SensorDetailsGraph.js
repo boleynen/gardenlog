@@ -71,7 +71,7 @@ function SensorDetailsGraph(props) {
               data: dataArray,
               // data: [1,2,3,4,5,6,7,8,9,10],
               borderColor: color,
-              tension: 0.3,
+              tension: 0.4,
               borderWidth: 4,
           }]
       }

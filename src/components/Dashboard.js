@@ -231,12 +231,14 @@ export default function Dashboard() {
 
   }, [])
 
+
   console.log(waterData)
+  
   return (
     <>
       <div className='content-wrapper'>
+        <TopNav pageTitle="Mijn tuin"/>
         <div className='content'>
-          <TopNav />
           <ForecastBlock />
 
           {sensorData != "" ? (

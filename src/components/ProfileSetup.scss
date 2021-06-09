@@ -1,0 +1,109 @@
+@import './variables.scss';
+.profileSetup{
+    @include default-paddings;
+    margin-top: 50px;
+    margin-left: 0px !important;
+    width: 100%;
+
+    h2{
+        font-size: 20px;
+        font-weight: bold;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+    button{
+        width: 100%;
+        margin-top: 20px;
+        padding-top: 20px;
+        background-color: white;
+        border: none;
+        color: var(--secondary-dark);
+        text-align: right;
+        border-top: 1px solid #f0f0f0;
+        border-radius: none;
+
+        &:hover{
+          background-color: white;
+          color: var(--secondary-dark);
+          border-top: 1px solid #f0f0f0;
+          border-radius: none;
+        }
+    }
+
+
+}
+
+.intro{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 30px 0px;
+    align-items: center;
+    .logoBlock{
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+        svg{
+            fill: var(--light-green);
+            min-width: 50px;
+            max-width: 50px;
+            min-height: 50px;
+            max-height: 50px;
+        }
+        h1{
+            color: var(--secondary-dark);
+            font-family: var(--default-font);
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 25px;
+            letter-spacing: 1px;
+        }
+    }
+
+}
+
+@media screen and (min-width: 1000px){
+    .intro{
+        flex-direction: row;
+        margin: 0;
+    }
+
+    .logoBlock{
+        background-color: var(--secondary-dark);
+        height: 100vh;
+        margin-bottom: 0 !important;
+        align-items: center;
+        justify-content: center;
+
+        svg{
+            min-width: 70px !important;
+            max-width: 70px !important;
+            min-height: 70px !important;
+            max-height: 70px !important;
+        }
+
+        h1{
+            color: white !important;
+            font-size: 37px !important;
+        }
+    }
+
+    .logoBlock, .profileSetup{
+        width: 50vw;
+    }
+
+    .profileSetup{
+        padding: 0px 12vw;
+
+        h2{
+            font-size: 25px;
+            margin-bottom: 50px;
+          }
+    
+          button{
+            margin-top: 50px;
+          }
+    }
+}

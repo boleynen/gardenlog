@@ -14,6 +14,8 @@ import SensorDetails from "./dashboard/SensorDetails"
 import Profile from "./Profile"
 import Weather from "./weather/Weather"
 import Calendar from "./Calendar"
+import PlantDetails from "./PlantDetails"
+import PlantDatabase from "./PlantDatabase"
 import './../style.css';
 
 function App() {
@@ -26,12 +28,14 @@ function App() {
               <PrivateRoute path="/weather" component={Weather} />
               <PrivateRoute path="/calendar" component={Calendar} />
               <PrivateRoute path="/update-profile" component={UpdateProfile} />
-              <PrivateRoute path="/profile-setup" component={ProfileSetup} />
               <PrivateRoute path="/add-plants" component={AddPlants} />
               <PrivateRoute path="/sensor-details" component={SensorDetails} />
+              <PrivateRoute path="/plant-details" component={PlantDetails} />
+              <PrivateRoute path="/plant-database" component={PlantDatabase} />
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} />
+              <Route path="/profile-setup" component={ProfileSetup} />
             </Switch>
           </AuthProvider>
         </Router>

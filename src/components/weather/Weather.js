@@ -170,12 +170,11 @@ function Weather() {
     // }
     
     return (
-        <>
-        {apiData ? (
-        <div className="content">
-            <TopNav />
-            {console.log('1', apiData)}
-            <div className="wrapper">
+    <>
+    <div className="content-wrapper">
+        <TopNav pageTitle={"Het weer"}/>
+            {apiData ? (
+            <div className="content weather">
                 <div className="weatherToday">
                     <div className="weatherToday__title">
                         <h1>{translateTitle(apiData.current.weather[0].main)}</h1>
@@ -211,37 +210,37 @@ function Weather() {
                     </ul>
                 </div>
                 <div className="weatherDetails row">
-                    <div className="weatherDetails__detail col-6 col-lg-2">
-                        <p>Zon op</p>
-                        <p className="bolder">{unixToTime(apiData.current.sunrise)}</p>
+                        <div className="weatherDetails__detail col-6 col-lg-2">
+                            <p>Zon op</p>
+                            <p className="bolder">{unixToTime(apiData.current.sunrise)}</p>
+                        </div>
+                        <div className="weatherDetails__detail col-6 col-lg-2">
+                            <p>Zon onder</p>
+                            <p className="bolder">{unixToTime(apiData.current.sunset)}</p>
+                        </div>
+                        <div className="weatherDetails__detail col-6 col-lg-2">
+                            <p>Neerslag</p>
+                            <p className="bolder">{apiData.daily[0].pop} mm</p>
+                        </div>
+                        <div className="weatherDetails__detail col-6 col-lg-2">
+                            <p>Vochtigheid</p>
+                            <p className="bolder">{apiData.current.humidity} %</p>
+                        </div>
+                        <div className="weatherDetails__detail col-6 col-lg-2">
+                            <p>Voelt aan als</p>
+                            <p className="bolder">{apiData.current.feels_like.toFixed(1)}&deg;</p>
+                        </div>
+                        <div className="weatherDetails__detail col-6 col-lg-2">
+                            <p>Wind</p>
+                            <p className="bolder">{apiData.current.wind_speed} m/s</p>
+                        </div>
                     </div>
-                    <div className="weatherDetails__detail col-6 col-lg-2">
-                        <p>Zon onder</p>
-                        <p className="bolder">{unixToTime(apiData.current.sunset)}</p>
-                    </div>
-                    <div className="weatherDetails__detail col-6 col-lg-2">
-                        <p>Neerslag</p>
-                        <p className="bolder">{apiData.daily[0].pop} mm</p>
-                    </div>
-                    <div className="weatherDetails__detail col-6 col-lg-2">
-                        <p>Vochtigheid</p>
-                        <p className="bolder">{apiData.current.humidity} %</p>
-                    </div>
-                    <div className="weatherDetails__detail col-6 col-lg-2">
-                        <p>Voelt aan als</p>
-                        <p className="bolder">{apiData.current.feels_like.toFixed(1)}&deg;</p>
-                    </div>
-                    <div className="weatherDetails__detail col-6 col-lg-2">
-                        <p>Wind</p>
-                        <p className="bolder">{apiData.current.wind_speed} m/s</p>
-                    </div>
-                </div>
             </div>
-        </div>
-        ) : (
-            <p>loading</p>
-        )}
-    <Navigation/>
+            ) : (
+                <p>loading</p>
+            )}
+        <Navigation/>
+    </div>
     </>
 );
 }

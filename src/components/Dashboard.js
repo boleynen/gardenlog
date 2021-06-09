@@ -15,31 +15,51 @@ import app from "../firebase"
 export default function Dashboard() {
   let [sensorData, setSensorData] = useState([]);
   const [plantsData, setPlantsData] = useState([]);
+
   var [waterData, setWaterData] = useState([]);
+  var lastWaterValue =
+      {
+      data: '?',
+      title: 'Temperatuur',
+      color: '#F88484',
+      icon: faExclamation,
+      }
+
+
+
+  var [tempData, setTempData] = useState([]);
+  var lastTempValue =
+    {
+      data: '?',
+      title: 'Vochtigheid',
+      color: '#9ED3FC',
+      icon: faExclamation,
+    }
+
+  var [lightData, setLightData] = useState([]);
+  var lastLightValue =
+    {
+      data: '?',
+      title: 'Licht',
+      color: '#FFDB5E',
+      icon: faExclamation,
+    }
+
+
+  var [plantNotes, setPlantNotes] = useState([]);
 
   const database = app.database();
   const userId = app.auth().currentUser.uid
   let databaseRef = database.ref(`user_plants/` + userId)
   let databasePlantsRef = database.ref(`plants/`)
   let databaseWaterSensorRef = database.ref(`arduino_data/water/`)
-
-  // functie voor lege values in objecten eruit te filteren
-  Object.filter = (obj, predicate) => 
-    Object.keys(obj)
-          .filter( key => predicate(obj[key]) )
-          .reduce( (res, key) => (res[key] = obj[key], res), {} );
-
-  function sortFunction(a, b) {
-    if (a[0] === b[0]) {
-        return 0;
-    }
-    else {
-        return (a[0] < b[0]) ? -1 : 1;
-    }
-  }
+  let databaseTempSensorRef = database.ref(`arduino_data/temp/`)
+  let databaseLightSensorRef = database.ref(`arduino_data/light/`)
 
   useEffect(() => {
     const responseIds = []
+    const plantNotes = []
+
     databaseRef.on('value', (data) =>{
       const userPlantIds = data.val();
       // console.log(userPlantIds)
@@ -51,8 +71,18 @@ export default function Dashboard() {
             plantDetails.plant_id
             )
           }
+
+        if(plantDetails.notes || plantDetails.notes != undefined){
+          // plantNotes = array van plant id en notities : [plant_id, [note 1, note 2]]
+            plantNotes.push([
+              {'plant_id' : plantDetails.plant_id}, plantDetails.notes
+            ])
+          }
         }
     })
+
+    // console.log(plantNotes)
+    setPlantNotes(plantNotes)
 
     const responseFilteredPlants = []
     databasePlantsRef.on('value', (data) =>{
@@ -73,11 +103,18 @@ export default function Dashboard() {
     setPlantsData(responseFilteredPlants)
 
     var responseWaterValues = [];
+    var responseTempValues = [];
+    var responseLightValues = [];
     let waterIcon = '';
+    let tempIcon = '';
+    let lightIcon = '';
     let waterClass = '';
+    let tempClass = '';
+    let lightClass = '';
     let waterMessage = '';
     let tempMessage = '';
     let lightMessage = '';
+
 
     databaseWaterSensorRef.on('value', (snapshot) =>{
       var waterValues = snapshot.val();
@@ -100,39 +137,101 @@ export default function Dashboard() {
         waterClass = 'safe'
         waterMessage = 'Je planten doen het goed!'
       }
-      
-      setSensorData([
-        {
-          data: '?',
-          title: 'Temperatuur',
-          icon: faExclamation,
-          color: '#F88484',
-          class: 'safe',
-          status: tempMessage
-        },
-        {
-          data: (water/10)+'%',
+
+      setTimeout(() => {
+        lastWaterValue = {
+          data: `${water}%`,
           title: 'Vochtigheid',
           icon: waterIcon,
           color: '#9ED3FC',
           class: waterClass,
           status: waterMessage
-        },
-        {
-          data: '?',
+        }
+      }, 50);
+    })
+
+    databaseLightSensorRef.on('value', (snapshot) =>{
+      var lightValues = snapshot.val();
+      responseLightValues = [];
+
+      setLightData(lightValues)
+      const lightValuesArr = Object.values(lightValues)
+      const light = lightValuesArr[lightValuesArr.length -1]
+
+      if(light<=100){
+        lightIcon = faExclamation
+        lightClass = 'warning'
+        lightMessage = 'Je planten hebben te weinig zon!'
+      }else if(light > 1000){
+        lightIcon = faExclamation
+        lightClass = 'warning'
+        lightMessage = 'Je planten gaan bijna verbranden'
+      }else{
+        lightIcon = faHeart
+        lightClass = 'safe'
+        lightMessage = 'Je planten hebben genoeg zonlicht!'
+      }
+      setTimeout(() => {
+        lastLightValue = {
+          data: `${light}%`,
           title: 'Licht',
-          icon: faExclamation,
+          icon: lightIcon,
           color: '#FFDB5E',
-          class: 'safe',
+          class: lightClass,
           status: lightMessage
-        },
-      ])
+        }
+      }, 50);
+      
+    })
+
+    databaseTempSensorRef.on('value', (snapshot) =>{
+      var tempValues = snapshot.val();
+      responseTempValues = [];
+
+      setLightData(tempValues)
+      const tempValuesArr = Object.values(tempValues)
+      const temp = tempValuesArr[tempValuesArr.length -1]
+
+      if(temp<=100){
+        tempIcon = faExclamation
+        tempClass = 'warning'
+        tempMessage = 'Je planten hebben het koud!'
+      }else if(temp > 1000){
+        tempIcon = faExclamation
+        tempClass = 'warning'
+        tempMessage = 'Je planten hebben het te warm!'
+      }else{
+        tempIcon = faHeart
+        tempClass = 'safe'
+        tempMessage = 'Je planten hebben genoeg warmte!'
+      }
+
+      setTimeout(() => {
+        lastTempValue = {
+          data: `${temp}°​C`,
+          title: 'Temperatuur',
+          icon: tempIcon,
+          color: '#F88484',
+          class: tempClass,
+          status: tempMessage
+        }
+      }, 50);
+      
     })
 
 
+    setTimeout(() => {
+      console.log(sensorData)
+      setSensorData([
+      lastWaterValue, lastLightValue, lastTempValue
+    ])
+    }, 200);
+    
+    
+
   }, [])
 
-  // console.log(waterData)
+  console.log(waterData)
   return (
     <>
       <div className='content-wrapper'>
@@ -147,7 +246,7 @@ export default function Dashboard() {
           )}
 
           {plantsData != "" ? (
-              plantsData && <PlantListBlock plantsData={plantsData} />
+              plantsData && <PlantListBlock plantsData={plantsData} plantNotes={plantNotes}/>
           ) : (
               <p>Nog geen planten!</p>
           )}
@@ -159,3 +258,31 @@ export default function Dashboard() {
   );
 
 }
+
+
+      // setSensorData([
+      //   {
+      //     data: '?',
+      //     title: 'Temperatuur',
+      //     icon: faExclamation,
+      //     color: '#F88484',
+      //     class: 'safe',
+      //     status: tempMessage
+      //   },
+      //   {
+      //     data: (water/10)+'%',
+      //     title: 'Vochtigheid',
+      //     icon: waterIcon,
+      //     color: '#9ED3FC',
+      //     class: waterClass,
+      //     status: waterMessage
+      //   },
+      //   {
+      //     data: '?',
+      //     title: 'Licht',
+      //     icon: faExclamation,
+      //     color: '#FFDB5E',
+      //     class: 'safe',
+      //     status: lightMessage
+      //   },
+      // ])

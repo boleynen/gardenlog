@@ -6,6 +6,7 @@ import './PlantListBlock.scss';
 function PlantListBlock(props) {
   // Declare a new state variables
   const [plantsData, setPlantsData] = useState(props.plantsData);
+  const [plantNotes, setPlantNotes] = useState(props.plantNotes);
 
   return (
     <div className={'plantListBlock'}>
@@ -13,7 +14,11 @@ function PlantListBlock(props) {
       <ul className={'plantListBlock__list'}>
         {/* {console.log(plantsData)} */}
         {plantsData.map((plant, index) => {
-          return <PlantListItem key={index} plant={plant} />;
+          return(
+            <Link key={index} to={{pathname:"/plant-details", plantsData: plant, plantsNotes: plantNotes}}>
+              <PlantListItem plant={plant}/>
+            </Link>
+            )
         })}
       </ul>
       <ButtonMedium buttonText={'Plant toevoegen'} />

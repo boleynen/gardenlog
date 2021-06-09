@@ -3,8 +3,6 @@ import './PlantListItem.scss';
 
 function PlantListItem(props) {
   // Declare a new state variables
-  const [plant, setPlant] = useState(props.plant);
-  // console.log(plant);
   return (
     <li className={'plantListItem'}>
       <img className={'plantListItem__img'} src={plant.img} alt='' />

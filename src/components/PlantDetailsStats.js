@@ -20,7 +20,7 @@ function PlantDetailsStats(props){
 
     return(
         <div className='plantDetailsStats'>
-            <p>{title}</p>
+            <p>{props.statsTitle}</p>
             <h2>{props.statsValue}</h2>
         </div>
     )

@@ -6,22 +6,22 @@ import './AddPlants.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import PlantListItem from './dashboard/PlantListItem';
+import Loader from './Loader'
 
 const database = app.database();
 
 export default function PlantsInDatabase(props) {
-    
+    const [loading, setLoading] = useState(true)
     const history = useHistory()
     const [plantsListState, setPlantsListState] = useState([{
         'id' : "",
         'checked' : false,
     }]);
     const [forDatabase, setForDatabase] = useState(props.isDatabase)
-
-    
     const newPlantsList = [];
     
     useEffect(() => {
+        setLoading(true)
         console.log(props.isDatabase)
         database.ref(`plants/`).on('value', (plantsList) => {
             const plants = plantsList.val();
@@ -39,9 +39,13 @@ export default function PlantsInDatabase(props) {
             setPlantsListState(newPlantsList);
 
         });
+        setTimeout(() => {
+            setLoading(false)
+          }, 800);
     }, [])
 
     function handleChange(e){
+        setLoading(true)
         plantsListState.forEach(function(plant){
             if(plant.id === e.target.id){
                 if(plant.checked === true){
@@ -80,7 +84,9 @@ export default function PlantsInDatabase(props) {
         
         console.log(newPlantsList)
         setPlantsListState(newPlantsList);
-        
+        setTimeout(() => {
+            setLoading(false)
+          }, 800);
     }
 
     function handleSubmit(e){
@@ -93,6 +99,7 @@ export default function PlantsInDatabase(props) {
                     owned : plant.checked
                 });
             })
+
             history.push("/")
         }
         addUserPlants()
@@ -100,40 +107,50 @@ export default function PlantsInDatabase(props) {
 
     const databasePlantsList = () => {
         return(
-        <>
-        {plantsListState.map((plant, index) => (
-            <Link key={index} to={{pathname:"/plant-details", plantsData: plant}}>
-                <PlantListItem plant={plant}/>
-            </Link>
-        ))}
-        </>
+            <>
+            {loading === false ? (
+                plantsListState.map((plant, index) => (
+                    <Link key={index} to={{pathname:"/plant-details", plantsData: plant}}>
+                        <PlantListItem plant={plant}/>
+                    </Link>
+                ))
+            ) : (
+                <Loader/>
+            )}
+            </>
         )
     }
 
     const introAddPlantsList = () => {
         return(
-        <Form onSubmit={handleSubmit}>
-            {plantsListState.map((plant, index) => (
-                <div key={index} className="selectPlant">
-                    <div className="selectPlant__img">
-                        <img src={`${plant.img}`} alt={`${plant.name}`} />
+            <>
+            {loading === false ? (
+            <Form onSubmit={handleSubmit}>
+                {plantsListState.map((plant, index) => (
+                    <div key={index} className="selectPlant">
+                        <div className="selectPlant__img">
+                            <img src={`${plant.img}`} alt={`${plant.name}`} />
+                        </div>
+                        <Form.Check 
+                            custom
+                            checked = {plant.checked}
+                            type= 'checkbox'
+                            value = {plant.checked}
+                            id = {`${plant.id}`}
+                            className="selectPlant__checkbox"
+                            label={`${plant.name}`}
+                            onChange={handleChange}
+                        />
                     </div>
-                    <Form.Check 
-                        custom
-                        checked = {plant.checked}
-                        type= 'checkbox'
-                        value = {plant.checked}
-                        id = {`${plant.id}`}
-                        className="selectPlant__checkbox"
-                        label={`${plant.name}`}
-                        onChange={handleChange}
-                    />
-                </div>
-            ))}
-            <Button className="" type="submit">
-                Voltooi &nbsp; <FontAwesomeIcon icon={faAngleRight} />
-            </Button>
-        </Form>
+                ))}
+                <Button className="" type="submit">
+                    Voltooi &nbsp; <FontAwesomeIcon icon={faAngleRight} />
+                </Button>
+            </Form>
+            ) : (
+                <Loader/>
+            )}
+            </>
         )
     }
 

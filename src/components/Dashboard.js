@@ -7,12 +7,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faExclamation } from '@fortawesome/free-solid-svg-icons';
 import ForecastBlock from './dashboard/ForecastBlock';
 import PlantListBlock from './dashboard/PlantListBlock';
+import Loader from './Loader'
 import app from "../firebase"
 
 
 // TODO: state opslaan in local storage (state is terug leeg elke x bij page refresh)
 
 export default function Dashboard() {
+  let [loading, setLoading] = useState(false);
+
   let [sensorData, setSensorData] = useState([]);
   const [plantsData, setPlantsData] = useState([]);
 
@@ -57,6 +60,8 @@ export default function Dashboard() {
   let databaseLightSensorRef = database.ref(`arduino_data/light/`)
 
   useEffect(() => {
+    setLoading(true)
+
     const responseIds = []
     const plantNotes = []
 
@@ -173,7 +178,7 @@ export default function Dashboard() {
       }
       setTimeout(() => {
         lastLightValue = {
-          data: `${light}%`,
+          data: `${light / 10}%`,
           title: 'Licht',
           icon: lightIcon,
           color: '#FFDB5E',
@@ -188,15 +193,15 @@ export default function Dashboard() {
       var tempValues = snapshot.val();
       responseTempValues = [];
 
-      setLightData(tempValues)
+      setTempData(tempValues)
       const tempValuesArr = Object.values(tempValues)
       const temp = tempValuesArr[tempValuesArr.length -1]
 
-      if(temp<=100){
+      if(temp<=0){
         tempIcon = faExclamation
         tempClass = 'warning'
         tempMessage = 'Je planten hebben het koud!'
-      }else if(temp > 1000){
+      }else if(temp > 50){
         tempIcon = faExclamation
         tempClass = 'warning'
         tempMessage = 'Je planten hebben het te warm!'
@@ -211,7 +216,7 @@ export default function Dashboard() {
           data: `${temp}°​C`,
           title: 'Temperatuur',
           icon: tempIcon,
-          color: '#F88484',
+          color: '#c0d59e',
           class: tempClass,
           status: tempMessage
         }
@@ -221,37 +226,37 @@ export default function Dashboard() {
 
 
     setTimeout(() => {
-      console.log(sensorData)
+      // console.log(sensorData)
       setSensorData([
       lastWaterValue, lastLightValue, lastTempValue
-    ])
-    }, 200);
-    
-    
+      ])
 
+    }, 200);
+
+    setTimeout(() => {
+      setLoading(false)
+    }, 800);
+    
   }, [])
 
 
-  console.log(waterData)
+  // console.log(waterData)
   
   return (
     <>
       <div className='content-wrapper'>
         <TopNav pageTitle="Mijn tuin"/>
         <div className='content'>
-          <ForecastBlock />
 
-          {sensorData != "" ? (
-              sensorData && <SensorDataBlock sensorData={sensorData} waterData={waterData}/>
-          ) : (
-              <p>We konden geen data ophalen.</p>
-          )}
-
-          {plantsData != "" ? (
-              plantsData && <PlantListBlock plantsData={plantsData} plantNotes={plantNotes}/>
-          ) : (
-              <p>Nog geen planten!</p>
-          )}
+            {loading === false ? (
+              <>
+              <ForecastBlock />
+              <SensorDataBlock sensorData={sensorData} waterData={waterData} lightData={lightData} tempData={tempData}/>
+              <PlantListBlock plantsData={plantsData} plantNotes={plantNotes}/>
+              </>
+            ) : (
+            <Loader/>
+            )}
 
         </div>
         <Navigation />

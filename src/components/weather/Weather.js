@@ -17,10 +17,13 @@ import stormImgSm from '../../assets/weatherStatus/small/sm-storm.png'
 import sunImgSm from '../../assets/weatherStatus/small/sm-sun.png'
 import { render } from "@testing-library/react";
 import Geocode from "react-geocode";
+import Loader from './../Loader'
 const axios = require('axios');
 
 
 function Weather() {
+    const [loading, setLoading] = useState(false);
+
     const [apiData, setApiData] = useState(null);
     const [userLocation, setUserLocation] = useState(null);
 
@@ -29,35 +32,6 @@ function Weather() {
 
     const apiKey = 'e0ec51e490d0691a2a24c61b2da3cf65';
     const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&lang=nl&appid=${apiKey}`;
-
-    useEffect(() => {
-        async function fetchMyApi(){
-            const res = await fetch(apiUrl)
-            if(!res.ok){
-                const alert = `An error occured: ${res.status}`
-                throw new Error(alert)
-            }
-            const apiData = await res.json()
-            // setApiData(weather)
-            console.log(apiData)
-            setApiData(apiData)
-        }
-        fetchMyApi()
-    }, [apiUrl]);
-
-    // functie voor unix timecodes naar date & time te zetten
-    const unixToDay = (u) =>{
-        var timestamp = u; // UNIX timestamp in seconds
-        var xx = new Date();
-        xx.setTime(timestamp*1000); // javascript timestamps are in milliseconds
-        return(xx.toLocaleDateString('nl', { weekday: 'long' })); // the Day
-    }
-    const unixToTime = (u) =>{
-        var timestamp = u; // UNIX timestamp in seconds
-        var xx = new Date();
-        xx.setTime(timestamp*1000); // javascript timestamps are in milliseconds
-        return(xx.toLocaleTimeString('nl-NL')); // the Day
-    }
 
     const thunderstorm = [200,201,202,210,211,212,221,230,231,232];
     const rain = [300,301,302,310,311,312,313,314,321,500,501,502,503,504,511,520,521,522,531];
@@ -104,8 +78,8 @@ function Weather() {
         }
     }
 
-    // functie voor data vanuit weather api van engels naar NL te vertalen
-    let translateTitle = (weatherEnglish) => {
+     // functie voor data vanuit weather api van engels naar NL te vertalen
+     let translateTitle = (weatherEnglish) => {
         if(weatherEnglish === 'Thunderstorm'){
             return 'Onweer'
         }
@@ -138,42 +112,72 @@ function Weather() {
         }
     }
 
-    Geocode.setApiKey("AIzaSyCulUiAQPwTtcagVE-fTb8OUXEHuNhGpFA");
-    Geocode.setLanguage("nl");
-    Geocode.setRegion("nl");
+    // functie voor unix timecodes naar date & time te zetten
+    const unixToDay = (u) =>{
+        var timestamp = u; // UNIX timestamp in seconds
+        var xx = new Date();
+        xx.setTime(timestamp*1000); // javascript timestamps are in milliseconds
+        return(xx.toLocaleDateString('nl', { weekday: 'long' })); // the Day
+    }
+    const unixToTime = (u) =>{
+        var timestamp = u; // UNIX timestamp in seconds
+        var xx = new Date();
+        xx.setTime(timestamp*1000); // javascript timestamps are in milliseconds
+        return(xx.toLocaleTimeString('nl-NL')); // the Day
+    }
 
-    // lat & lon naar plaats
-    Geocode.fromLatLng(lat, lon).then(
-        (response) => {
-          let city, country;
-          for (let i = 0; i < response.results[0].address_components.length; i++) {
-            for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
-              switch (response.results[0].address_components[i].types[j]) {
-                case "locality":
-                  city = response.results[0].address_components[i].long_name;
-                  break;
-                case "country":
-                  country = response.results[0].address_components[i].long_name;
-                  break;
-              }
+    useEffect(() => {
+        async function fetchMyApi(){
+            const res = await fetch(apiUrl)
+            if(!res.ok){
+                const alert = `An error occured: ${res.status}`
+                throw new Error(alert)
             }
-          }
-          setUserLocation(city + ', ' + country)
-        },
-        (error) => {
-          console.error(error);
+            const apiData = await res.json()
+            // setApiData(weather)
+            console.log(apiData)
+            setApiData(apiData)
         }
-      );
+        fetchMyApi()
 
-    // if (!apiData){
-    //     return <h1>Failed to get weather data</h1>
-    // }
+        Geocode.setApiKey("AIzaSyCulUiAQPwTtcagVE-fTb8OUXEHuNhGpFA");
+        Geocode.setLanguage("nl");
+        Geocode.setRegion("nl");
     
+        // lat & lon naar plaats
+        Geocode.fromLatLng(lat, lon).then(
+            (response) => {
+              let city, country;
+              for (let i = 0; i < response.results[0].address_components.length; i++) {
+                for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
+                  switch (response.results[0].address_components[i].types[j]) {
+                    case "locality":
+                      city = response.results[0].address_components[i].long_name;
+                      break;
+                    case "country":
+                      country = response.results[0].address_components[i].long_name;
+                      break;
+                  }
+                }
+              }
+              setUserLocation(city + ', ' + country)
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
+
+          setTimeout(() => {
+            setLoading(false)
+          }, 1000);
+
+    }, []);
+
     return (
     <>
     <div className="content-wrapper">
         <TopNav pageTitle={"Het weer"}/>
-            {apiData ? (
+        { apiData  && loading === false ? (
             <div className="content weather">
                 <div className="weatherToday">
                     <div className="weatherToday__title">
@@ -236,9 +240,10 @@ function Weather() {
                         </div>
                     </div>
             </div>
-            ) : (
-                <p>loading</p>
-            )}
+        ) : (
+            <Loader/>
+        )}
+            
         <Navigation/>
     </div>
     </>

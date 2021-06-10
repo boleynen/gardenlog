@@ -10,4 +10,67 @@
     margin-top: 2rem;
     margin-bottom: 2rem;
   }
+
 }
+
+  .modal-header{
+    .modal-title{
+      font-family: $default-font;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+
+  .modal-body{
+    input, textarea{
+      font-family: $default-font;
+      background-color: #F4F4F4;
+      border: 2px solid #f4f4f4;
+      &:hover, &:active, &:focus-within, &:target{
+        background-color: #F4F4F4;
+        box-shadow: none;
+      }
+      &:focus{
+        border: 2px solid $light-green;
+      }
+    }
+  }
+
+  .modal-footer{
+    justify-content: space-between !important;
+  }
+  
+  button.modalButton{
+    height: 45px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: $button-color;
+    color: $secondary-dark;
+    // font-weight: bold;
+    text-transform: uppercase;
+    transition: all .5s;
+  
+    &:hover, &:focus, &:active, &:focus-within, &:target{
+      transform: scale(1.05);
+      text-decoration: none;
+      background-color: $button-color;
+      color: $secondary-dark;
+      border: none ;
+      box-shadow: none;
+    }
+  
+  }
+  
+  button.modalButton.small{
+    max-width: 50% !important;
+  }
+  
+  button.modalButton.dark{
+    max-width: 120px !important;
+    background-color: transparent;
+  }

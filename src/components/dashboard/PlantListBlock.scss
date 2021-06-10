@@ -10,5 +10,16 @@
   }
   &__list {
     padding-bottom: 0.1rem;
+    a{
+      &:hover{
+        text-decoration: none;
+      }
+      li{
+        transition: all .5s;
+        &:hover{
+          transform: scale(1.05);
+        }
+      }
+    }
   }
 }

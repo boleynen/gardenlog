@@ -7,8 +7,10 @@
   overflow: hidden;
   min-height: 75px;
   margin-bottom: 0.8rem;
+  transition: .5s all;
   &:hover{
     cursor: pointer;
+    transform: scale(1.05);
   }
 
   &__img {

@@ -2,20 +2,10 @@ import React, { useState, useEffect } from "react"
 import Navigation from '../navigation/BottomNav'
 import TopNav from '../navigation/TopNav';
 import fetchWeather from '../api/fetchWeather'
+import translateWeather from '../../functions/translateWeather'
+import findImg from '../../functions/findImg'
+import findSmallImg from '../../functions/findSmallImg'
 import './Weather.scss';
-import cloudsImg from '../../assets/weatherStatus/clouds.png'
-import mistImg from '../../assets/weatherStatus/mist.png'
-import rainImg from '../../assets/weatherStatus/rain.png'
-import snowImg from '../../assets/weatherStatus/snow.png'
-import stormImg from '../../assets/weatherStatus/storm.png'
-import sunImg from '../../assets/weatherStatus/sun.png'
-import cloudsImgSm from '../../assets/weatherStatus/small/sm-clouds.png'
-import mistImgSm from '../../assets/weatherStatus/small/sm-mist.png'
-import rainImgSm from '../../assets/weatherStatus/small/sm-rain.png'
-import snowImgSm from '../../assets/weatherStatus/small/sm-snow.png'
-import stormImgSm from '../../assets/weatherStatus/small/sm-storm.png'
-import sunImgSm from '../../assets/weatherStatus/small/sm-sun.png'
-import { render } from "@testing-library/react";
 import Geocode from "react-geocode";
 import Loader from './../Loader'
 const axios = require('axios');
@@ -23,94 +13,13 @@ const axios = require('axios');
 
 function Weather() {
     const [loading, setLoading] = useState(false);
-
+    const [query, setQuery] = useState('');
     const [apiData, setApiData] = useState(null);
     const [userLocation, setUserLocation] = useState(null);
 
+
     let lat = 51.24;
     let lon = 5.11; 
-
-    const apiKey = 'e0ec51e490d0691a2a24c61b2da3cf65';
-    const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&lang=nl&appid=${apiKey}`;
-
-    const thunderstorm = [200,201,202,210,211,212,221,230,231,232];
-    const rain = [300,301,302,310,311,312,313,314,321,500,501,502,503,504,511,520,521,522,531];
-    const snow = [600,601,602,611,612,613,615,616,620,621,622];
-    const atmosphere = [701,711,721,731,741,751,761,762,771,781];
-    const clear = 800;
-    const clouds = [801,802,803,804];
-
-    // functie dat juiste achtergrond img toont: 
-    // weather API krijgt code binnen die vetreld wat voor weer het is, en toon ahv die code juiste image (zie codes bovenaan)
-    let findImg = (id) => {
-        if(thunderstorm.includes(id)){
-            return stormImg;
-        }else if(rain.includes(id)){
-            return rainImg;
-        }else if(snow.includes(id)){
-            return snowImg;
-        }else if(atmosphere.includes(id)){
-            return mistImg;
-        }else if(clear === id){
-            return sunImg;
-        }else if(clouds.includes(id)){
-            return cloudsImg;
-        }else{
-            console.log('weather api didnt return anything')
-        }
-    }
-
-    let findSmallImg = (id) => {
-        if(thunderstorm.includes(id)){
-            return stormImgSm;
-        }else if(rain.includes(id)){
-            return rainImgSm;
-        }else if(snow.includes(id)){
-            return snowImgSm;
-        }else if(atmosphere.includes(id)){
-            return mistImgSm;
-        }else if(clear === id){
-            return sunImgSm;
-        }else if(clouds.includes(id)){
-            return cloudsImgSm;
-        }else{
-            console.log('weather api didnt return anything')
-        }
-    }
-
-     // functie voor data vanuit weather api van engels naar NL te vertalen
-     let translateTitle = (weatherEnglish) => {
-        if(weatherEnglish === 'Thunderstorm'){
-            return 'Onweer'
-        }
-        if(weatherEnglish === 'Drizzle'){
-            return 'Motregen'
-        }
-        if(weatherEnglish === 'Rain'){
-            return 'Regen'
-        }
-        if(weatherEnglish === 'Snow'){
-            return 'Sneeuw'
-        }
-        if(weatherEnglish === 'Mist' 
-        || weatherEnglish === 'Smoke'
-        || weatherEnglish === 'Haze'
-        || weatherEnglish === 'Dust'
-        || weatherEnglish === 'Fog'
-        || weatherEnglish === 'Sand'
-        || weatherEnglish === 'Ash'
-        || weatherEnglish === 'Tornado'
-        || weatherEnglish === 'Squall'
-        ){
-            return 'Mist'
-        }
-        if(weatherEnglish === 'Clear'){
-            return 'Zonnig'
-        }
-        if(weatherEnglish === 'Clouds'){
-            return 'Bewolkt'
-        }
-    }
 
     // functie voor unix timecodes naar date & time te zetten
     const unixToDay = (u) =>{
@@ -127,17 +36,14 @@ function Weather() {
     }
 
     useEffect(() => {
+        setLoading(true)
+
         async function fetchMyApi(){
-            const res = await fetch(apiUrl)
-            if(!res.ok){
-                const alert = `An error occured: ${res.status}`
-                throw new Error(alert)
-            }
-            const apiData = await res.json()
-            // setApiData(weather)
-            console.log(apiData)
-            setApiData(apiData)
+            const data = await fetchWeather(query)
+            console.log(data)
+            setApiData(data)
         }
+
         fetchMyApi()
 
         Geocode.setApiKey("AIzaSyCulUiAQPwTtcagVE-fTb8OUXEHuNhGpFA");
@@ -177,11 +83,12 @@ function Weather() {
     <>
     <div className="content-wrapper">
         <TopNav pageTitle={"Het weer"}/>
-        { apiData  && loading === false ? (
             <div className="content weather">
+            { apiData  && loading === false ? (
+                <>
                 <div className="weatherToday">
                     <div className="weatherToday__title">
-                        <h1>{translateTitle(apiData.current.weather[0].main)}</h1>
+                        <h1>{translateWeather(apiData.current.weather[0].main)}</h1>
                         {/* <h2>{userLocation}</h2> */}
                         <h2>Dessel-belgie</h2>
                     </div>
@@ -214,35 +121,36 @@ function Weather() {
                     </ul>
                 </div>
                 <div className="weatherDetails row">
-                        <div className="weatherDetails__detail col-6 col-lg-2">
-                            <p>Zon op</p>
-                            <p className="bolder">{unixToTime(apiData.current.sunrise)}</p>
-                        </div>
-                        <div className="weatherDetails__detail col-6 col-lg-2">
-                            <p>Zon onder</p>
-                            <p className="bolder">{unixToTime(apiData.current.sunset)}</p>
-                        </div>
-                        <div className="weatherDetails__detail col-6 col-lg-2">
-                            <p>Neerslag</p>
-                            <p className="bolder">{apiData.daily[0].pop} mm</p>
-                        </div>
-                        <div className="weatherDetails__detail col-6 col-lg-2">
-                            <p>Vochtigheid</p>
-                            <p className="bolder">{apiData.current.humidity} %</p>
-                        </div>
-                        <div className="weatherDetails__detail col-6 col-lg-2">
-                            <p>Voelt aan als</p>
-                            <p className="bolder">{apiData.current.feels_like.toFixed(1)}&deg;</p>
-                        </div>
-                        <div className="weatherDetails__detail col-6 col-lg-2">
-                            <p>Wind</p>
-                            <p className="bolder">{apiData.current.wind_speed} m/s</p>
-                        </div>
+                    <div className="weatherDetails__detail col-6 col-lg-4">
+                        <p>Zon op</p>
+                        <p className="bolder">{unixToTime(apiData.current.sunrise)}</p>
                     </div>
+                    <div className="weatherDetails__detail col-6 col-lg-4">
+                        <p>Zon onder</p>
+                        <p className="bolder">{unixToTime(apiData.current.sunset)}</p>
+                    </div>
+                    <div className="weatherDetails__detail col-6 col-lg-4">
+                        <p>Neerslag</p>
+                        <p className="bolder">{apiData.daily[0].pop} mm</p>
+                    </div>
+                    <div className="weatherDetails__detail col-6 col-lg-4">
+                        <p>Vochtigheid</p>
+                        <p className="bolder">{apiData.current.humidity} %</p>
+                    </div>
+                    <div className="weatherDetails__detail col-6 col-lg-4">
+                        <p>Voelt aan als</p>
+                        <p className="bolder">{apiData.current.feels_like.toFixed(1)}&deg;</p>
+                    </div>
+                    <div className="weatherDetails__detail col-6 col-lg-4">
+                        <p>Wind</p>
+                        <p className="bolder">{apiData.current.wind_speed} m/s</p>
+                    </div>
+                </div>
+                </>
+            ) : (
+                <Loader/>
+            )}
             </div>
-        ) : (
-            <Loader/>
-        )}
             
         <Navigation/>
     </div>

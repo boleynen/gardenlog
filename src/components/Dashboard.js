@@ -14,9 +14,8 @@ import app from "../firebase"
 // TODO: state opslaan in local storage (state is terug leeg elke x bij page refresh)
 
 export default function Dashboard() {
-  let [loading, setLoading] = useState(false);
-
-  let [sensorData, setSensorData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [sensorData, setSensorData] = useState([]);
   const [plantsData, setPlantsData] = useState([]);
 
   var [waterData, setWaterData] = useState([]);
@@ -247,7 +246,6 @@ export default function Dashboard() {
       <div className='content-wrapper'>
         <TopNav pageTitle="Mijn tuin"/>
         <div className='content'>
-
             {loading === false ? (
               <>
               <ForecastBlock />
@@ -257,7 +255,6 @@ export default function Dashboard() {
             ) : (
             <Loader/>
             )}
-
         </div>
         <Navigation />
       </div>
@@ -265,31 +262,3 @@ export default function Dashboard() {
   );
 
 }
-
-
-      // setSensorData([
-      //   {
-      //     data: '?',
-      //     title: 'Temperatuur',
-      //     icon: faExclamation,
-      //     color: '#F88484',
-      //     class: 'safe',
-      //     status: tempMessage
-      //   },
-      //   {
-      //     data: (water/10)+'%',
-      //     title: 'Vochtigheid',
-      //     icon: waterIcon,
-      //     color: '#9ED3FC',
-      //     class: waterClass,
-      //     status: waterMessage
-      //   },
-      //   {
-      //     data: '?',
-      //     title: 'Licht',
-      //     icon: faExclamation,
-      //     color: '#FFDB5E',
-      //     class: 'safe',
-      //     status: lightMessage
-      //   },
-      // ])

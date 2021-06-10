@@ -1,11 +1,13 @@
 @import './variables.scss';
 .lds-ellipsis {
     display: block;
-    position: relative;
+    position: absolute;
     width: 80px;
     height: 80px;
     @include default-paddings;
-    margin: calc(50vh - 80px) auto;
+    top: 50%;
+    left: calc(50% - 40px);
+    transform: translate(0, -50%);
   }
   .lds-ellipsis div {
     position: absolute;

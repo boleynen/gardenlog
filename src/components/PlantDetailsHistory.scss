@@ -1,0 +1,50 @@
+@import './variables.scss';
+.node {
+    min-height: 12px;
+    min-width: 12px;
+    border-radius: 50%;
+    border: 2px solid #E3E9E4;
+    display:inline-block;
+    transition: all 1000ms ease;
+    margin: 0;
+}
+
+.divider {
+    height: 70px;
+    width: 2px;
+    margin-left: 5px;
+    transition: all 800ms ease;
+}
+
+.note, .line{
+    list-style: none;
+    line-height: 20px;
+    display: flex;
+    align-items: center; 
+    margin-top: -20px;
+
+   div {
+        display:inline-block;
+
+        .date{
+            font-size: 12px;
+        }
+        
+        p{
+            margin: 0px 0px 0px 25px;
+            margin-bottom: 7px;
+        }
+    }
+}
+
+.line{
+    z-index: -5;
+    position: relative;
+}
+
+.grey { 
+    background-color: #E3E9E4;
+}
+.green{
+    background-color: $dark-green; 
+}

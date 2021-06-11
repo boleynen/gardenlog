@@ -27,8 +27,6 @@ export default function Dashboard() {
       icon: faExclamation,
       }
 
-
-
   var [tempData, setTempData] = useState([]);
   var lastTempValue =
     {
@@ -67,7 +65,6 @@ export default function Dashboard() {
     databaseRef.on('value', (data) =>{
       const userPlantIds = data.val();
       // console.log(userPlantIds)
-      
 
       for (const [plant, plantDetails] of Object.entries(userPlantIds)){
         if(plantDetails.owned === true){
@@ -82,7 +79,7 @@ export default function Dashboard() {
               {'plant_id' : plantDetails.plant_id}, plantDetails.notes
             ])
           }
-        }
+      }
     })
 
     // console.log(plantNotes)

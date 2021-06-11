@@ -8,7 +8,6 @@ function PlantListBlock(props) {
   // Declare a new state variables
   const [plantsData, setPlantsData] = useState(props.plantsData);
   const [plantNotes, setPlantNotes] = useState(props.plantNotes);
-
   return (
     <div className={'plantListBlock'}>
       <h1 className={'plantListBlock__title'}>Mijn planten</h1>

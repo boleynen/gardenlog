@@ -16,7 +16,7 @@ export default fetchWeather = async (query) => {
 
     const apiData = await res.json()
 
-    console.log(apiData)
+    // console.log(apiData)
 
     return apiData
 }

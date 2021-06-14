@@ -67,7 +67,7 @@ function PlantDetails(props){
             }
         })
 
-        // console.log(notesArr)
+        console.log(notesArr)
 
         notesArr = notesArr[0]
         setNotes(notesArr)
@@ -141,7 +141,7 @@ function PlantDetails(props){
                 </Button>
                 <Button className="modalButton small" variant="primary" onClick={()=>{
                     handleClose(); 
-                    setAllNotes([...props.location.plantsNotes])
+                    setAllNotes([props.location.plantsNotes])
                     }} type="submit">
                     Opslaan
                 </Button>

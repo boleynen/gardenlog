@@ -2,9 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import ButtonMedium from './../navigation/ButtonMedium'
 import SensorCardList from './SensorCardList';
-import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import app from "./../../firebase"
 import './SensorDataBlock.scss';
 
@@ -34,9 +32,7 @@ function SensorDataBlock(props) {
         desc: inputDesc
       })
     }
-
     setUserNote(unix, titleRef.current.value, descRef.current.value)
-
   }
 
   return (

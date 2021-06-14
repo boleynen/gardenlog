@@ -27,22 +27,21 @@ export default function PlantsInDatabase(props) {
 
     console.log(props.isDatabase);
     database.ref(`plants/`).on('value', (plantsList) => {
-      const plants = plantsList.val();
+    const plants = plantsList.val();
 
-      plants.forEach(function (plant) {
+    plants.forEach(function (plant) {
         console.log(plant);
         newPlantsList.push({
-          id: plant.id,
-          name: plant.name,
-          latName: plant.latName,
-          img: plant.img,
-          checked: false,
-          stats: plant.stats,
-          info: plant.info,
+        id: plant.id,
+        name: plant.name,
+        latName: plant.latName,
+        img: plant.img,
+        checked: false,
+        stats: plant.stats,
+        info: plant.info,
         });
       });
 
-      //   console.log('npl', newPlantsList);
       setPlantsListState(newPlantsList);
     });
     setTimeout(() => {
@@ -50,120 +49,121 @@ export default function PlantsInDatabase(props) {
     }, 800);
   }, []);
 
-  function handleChange(e) {
+    function handleChange(e) {
     setLoading(true);
     plantsListState.forEach(function (plant) {
-      if (plant.id === e.target.id) {
+        if (plant.id === e.target.id) {
         if (plant.checked === true) {
-          newPlantsList.push({
+            newPlantsList.push({
             id: plant.id,
             name: plant.name,
             img: plant.img,
             checked: false,
-          });
+            });
         } else {
-          newPlantsList.push({
+            newPlantsList.push({
             id: plant.id,
             name: plant.name,
             img: plant.img,
             checked: true,
-          });
+            });
         }
-      } else {
+        } else {
         if (plant.checked === true) {
-          newPlantsList.push({
+            newPlantsList.push({
             id: plant.id,
             name: plant.name,
             img: plant.img,
             checked: true,
-          });
+            });
         } else {
-          newPlantsList.push({
+            newPlantsList.push({
             id: plant.id,
             name: plant.name,
             img: plant.img,
             checked: false,
-          });
+            });
         }
-      }
+        }
     });
 
     console.log(newPlantsList);
     setPlantsListState(newPlantsList);
     setTimeout(() => {
-      setLoading(false);
+        setLoading(false);
     }, 800);
-  }
+    }
 
-  function handleSubmit(e) {
+    function handleSubmit(e) {
     e.preventDefault();
     function addUserPlants() {
-      const userId = app.auth().currentUser.uid;
-      plantsListState.forEach(function (plant) {
-        database.ref(`user_plants/` + userId).push({
-          plant_id: plant.id,
-          owned: plant.checked,
+        const userId = app.auth().currentUser.uid;
+        plantsListState.forEach(function (plant) {
+            database.ref(`user_plants/`+ userId).child(plant.id).set({
+                plant_id : plant.id,
+                owned : plant.checked
+            });
         });
-      });
 
-      history.push('/');
+        history.push('/');
     }
     addUserPlants();
-  }
+    }
 
-  const databasePlantsList = () => {
+    const databasePlantsList = () => {
     return (
-      <>
+        <>
         {loading === false ? (
-          plantsListState.map((plant, index) => (
+            plantsListState.map((plant, index) => (
             <Link
-              key={index}
-              to={{ pathname: '/database-plant-details', plantsData: plant }}
+                key={index}
+                to={{ pathname: '/database-plant-details', plantsData: plant }}
             >
-              <PlantListItem plant={plant} />
+                <PlantListItem plant={plant} />
             </Link>
-          ))
+            ))
         ) : (
-          <Loader />
+            <Loader />
         )}
-      </>
+        </>
     );
-  };
+    };
 
-  const introAddPlantsList = () => {
+    const introAddPlantsList = () => {
     return (
-      <>
+        <>
         {loading === false ? (
-          <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
             {plantsListState.map((plant, index) => (
-              <div key={index} className='selectPlant'>
+                <div key={index} className='selectPlant'>
                 <div className='selectPlant__img'>
-                  <img src={`${plant.img}`} alt={`${plant.name}`} />
+                    <img src={`${plant.img}`} alt={`${plant.name}`} />
                 </div>
                 <Form.Check
-                  custom
-                  checked={plant.checked}
-                  type='checkbox'
-                  value={plant.checked}
-                  id={`${plant.id}`}
-                  className='selectPlant__checkbox'
-                  label={`${plant.name}`}
-                  onChange={handleChange}
+                    custom
+                    checked={plant.checked}
+                    type='checkbox'
+                    value={plant.checked}
+                    id={`${plant.id}`}
+                    className='selectPlant__checkbox'
+                    label={`${plant.name}`}
+                    onChange={handleChange}
                 />
-              </div>
+                </div>
             ))}
             <Button className='' type='submit'>
-              Voltooi &nbsp; <FontAwesomeIcon icon={faAngleRight} />
+                Voltooi &nbsp; <FontAwesomeIcon icon={faAngleRight} />
             </Button>
-          </Form>
+            </Form>
         ) : (
-          <Loader />
+            <Loader />
         )}
-      </>
+        </>
     );
-  };
+    };
 
-  return (
+    return (
     <>{forDatabase === false ? introAddPlantsList() : databasePlantsList()}</>
   );
 }
+

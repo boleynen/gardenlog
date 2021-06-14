@@ -98,7 +98,7 @@ export default function PlantsInDatabase(props) {
         function addUserPlants(){
             const userId = app.auth().currentUser.uid
             plantsListState.forEach(function(plant){
-                database.ref(`user_plants/`+ userId).push({
+                database.ref(`user_plants/`+ userId).child(plant.id).set({
                     plant_id : plant.id,
                     owned : plant.checked
                 });

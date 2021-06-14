@@ -20,9 +20,12 @@ function PlantDetails(props){
     
     let img = props.location.plantsData.img
     let plant_id = props.location.plantsData.id
+    // console.log(props.location.plantsData)
     let stats = props.location.plantsData.stats
     let statsArr = Object.entries(stats)
     let allNotes = props.location.plantsNotes
+
+    // console.log(allNotes)
     let notesArr = []
     
     const [show, setShow] = useState(false)
@@ -41,12 +44,11 @@ function PlantDetails(props){
       e.preventDefault();
       let unixMs = new Date().getTime()/1000
       let unix = Math.floor(unixMs)
-
       
       function setUserNote(date, inputDesc){
-        // databaseRef.child(date).push(
-        //     inputDesc
-        //   )
+        databaseRef.child(date).set({
+            desc: inputDesc
+        })
       }
 
       setUserNote(unix, descRef.current.value)
@@ -56,15 +58,19 @@ function PlantDetails(props){
         setLoading(true)
 
         allNotes.forEach(function(val){
+            console.log('sd',val[0].plant_id)
+            console.log('id',plant_id)
+
             if(val[0].plant_id === plant_id){
+                // console.log(val[1])
                 notesArr.push(Object.entries(val[1]))
             }
         })
 
+        // console.log(notesArr)
+
         notesArr = notesArr[0]
         setNotes(notesArr)
-        
-        // console.log(notes)
 
         setTimeout(() => {
             setLoading(false)
@@ -102,7 +108,7 @@ function PlantDetails(props){
                             ) : (
                                 notes.map((val, index) => {
                                     return(
-                                        <PlantDetailsHistory key={index} noteDate={val[0]} noteDesc={val[1]}/>
+                                        <PlantDetailsHistory key={index} noteDate={val[0]} noteDesc={val[1].desc}/>
                                     )
                                 })
                             )}
@@ -122,7 +128,7 @@ function PlantDetails(props){
             <Modal show={show} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter" centered>
             <Form onSubmit={handleSubmit}>
                 <Modal.Header closeButton>
-                <Modal.Title >Kalendernotitie toevoegen</Modal.Title>
+                <Modal.Title >Notitie toevoegen</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <Form.Group className="" id="desc">

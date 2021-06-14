@@ -22,6 +22,8 @@ export default function PlantsInDatabase(props) {
     
     useEffect(() => {
         setLoading(true)
+
+
         console.log(props.isDatabase)
         database.ref(`plants/`).on('value', (plantsList) => {
             const plants = plantsList.val();
@@ -30,12 +32,14 @@ export default function PlantsInDatabase(props) {
                 newPlantsList.push({
                             'id' : plant.id,
                             'name' : plant.name,
+                            'latName' : plant.latName,
                             'img' : plant.img,
                             'checked' : false,
-                        })
+                            'stats' : plant.stats
+                })
             })
 
-            console.log(newPlantsList)
+            console.log('npl' , newPlantsList)
             setPlantsListState(newPlantsList);
 
         });
@@ -110,7 +114,7 @@ export default function PlantsInDatabase(props) {
             <>
             {loading === false ? (
                 plantsListState.map((plant, index) => (
-                    <Link key={index} to={{pathname:"/plant-details", plantsData: plant}}>
+                    <Link key={index} to={{pathname:"/database-plant-details", plantsData: plant}}>
                         <PlantListItem plant={plant}/>
                     </Link>
                 ))

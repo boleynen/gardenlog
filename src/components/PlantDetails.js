@@ -36,6 +36,8 @@ function PlantDetails(props){
         setTimeout(() => {
             setLoading(false)
         }, 800);
+
+        console.log(props.location)
     }, [])
 
     return(

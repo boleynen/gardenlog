@@ -38,6 +38,7 @@
 .plantHistory{
     @include default-paddings;
     padding-top: 2.5rem;
+    height: fit-content;
 
     h1{
         font-size:18px;
@@ -48,6 +49,11 @@
 
     &__wrap{
         padding-top: 30px;
+    }
+
+    button{
+        margin-top: 3rem;
+        margin-bottom: 5rem;
     }
     
 }

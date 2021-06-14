@@ -26,9 +26,9 @@ export default function DatabasePlantDetails(props){
 
     const plantAlreadyOwned = () => {
         return(
-            <>
-            <ButtonMedium buttonLink='' buttonText={'Plant Toevoegen'}/>
-            </>
+            <p>
+            Je hebt deze plant al toegevoegd!
+            </p>
         )
     }
 
@@ -90,7 +90,7 @@ export default function DatabasePlantDetails(props){
                 </div>
                 <div className="databasePlantDetails__addPlant">
                 {
-                    owned === false
+                    owned === true
                     ? addPlant()
                     : plantAlreadyOwned()
                 }

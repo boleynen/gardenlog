@@ -16,14 +16,14 @@ const database = app.database();
 function PlantDetails(props){
     const [loading, setLoading] = useState(false)
     let [notes, setNotes] = useState('')
-
     
     let img = props.location.plantsData.img
     let plant_id = props.location.plantsData.id
     // console.log(props.location.plantsData)
     let stats = props.location.plantsData.stats
     let statsArr = Object.entries(stats)
-    let allNotes = props.location.plantsNotes
+    // let allNotes = props.location.plantsNotes
+    let [allNotes, setAllNotes] = useState(props.location.plantsNotes)
 
     // console.log(allNotes)
     let notesArr = []
@@ -37,7 +37,7 @@ function PlantDetails(props){
     
     const handleShow = () => setShow(true)
     const handleClose = () => setShow(false)
-  
+
     const descRef = useRef()
 
     function handleSubmit(e){
@@ -76,7 +76,6 @@ function PlantDetails(props){
             setLoading(false)
         }, 800);
 
-        // console.log(props.location)
     }, [])
 
     return(
@@ -115,7 +114,7 @@ function PlantDetails(props){
                             {}
                         </ul>
                         </div>
-                        <Button className="modalButton" variant="primary" onClick={handleShow}>
+                        <Button className="modalButton" variant="primary" onClick={()=> { handleShow()}}>
                             Notitie toevoegen
                         </Button>
                     </div>
@@ -140,7 +139,10 @@ function PlantDetails(props){
                 <Button className="modalButton dark" variant="secondary" onClick={handleClose}>
                     Annuleer
                 </Button>
-                <Button className="modalButton small" variant="primary" onClick={handleClose} type="submit">
+                <Button className="modalButton small" variant="primary" onClick={()=>{
+                    handleClose(); 
+                    setAllNotes([...props.location.plantsNotes])
+                    }} type="submit">
                     Opslaan
                 </Button>
                 </Modal.Footer>

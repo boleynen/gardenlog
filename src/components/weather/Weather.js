@@ -8,6 +8,8 @@ import findSmallImg from '../../functions/findSmallImg'
 import './Weather.scss';
 import Geocode from "react-geocode";
 import Loader from './../Loader'
+import unixToDay from "../../functions/unixToDay";
+import unixToTime from "../../functions/unixToTime";
 const axios = require('axios');
 
 
@@ -20,20 +22,6 @@ function Weather() {
 
     let lat = 51.24;
     let lon = 5.11; 
-
-    // functie voor unix timecodes naar date & time te zetten
-    const unixToDay = (u) =>{
-        var timestamp = u; // UNIX timestamp in seconds
-        var xx = new Date();
-        xx.setTime(timestamp*1000); // javascript timestamps are in milliseconds
-        return(xx.toLocaleDateString('nl', { weekday: 'long' })); // the Day
-    }
-    const unixToTime = (u) =>{
-        var timestamp = u; // UNIX timestamp in seconds
-        var xx = new Date();
-        xx.setTime(timestamp*1000); // javascript timestamps are in milliseconds
-        return(xx.toLocaleTimeString('nl-NL')); // the Day
-    }
 
     useEffect(() => {
         setLoading(true)

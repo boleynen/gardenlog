@@ -16,6 +16,7 @@ import Weather from "./weather/Weather"
 import Calendar from "./Calendar"
 import PlantDetails from "./PlantDetails"
 import PlantDatabase from "./PlantDatabase"
+import DatabasePlantDetails from "./DatabasePlantDetails"
 import './../style.css';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
               <PrivateRoute path="/sensor-details" component={SensorDetails} />
               <PrivateRoute path="/plant-details" component={PlantDetails} />
               <PrivateRoute path="/plant-database" component={PlantDatabase} />
+              <PrivateRoute path="/database-plant-details" component={DatabasePlantDetails} />
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} />

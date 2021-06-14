@@ -21,7 +21,7 @@ function ForecastBlock(props) {
   useEffect(() => {
     async function fetchMyApi(){
       const data = await fetchWeather(query)
-      console.log(data)
+      // console.log(data)
       setApiData(data)
     }
     fetchMyApi()

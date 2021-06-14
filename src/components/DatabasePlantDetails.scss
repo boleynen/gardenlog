@@ -1,0 +1,70 @@
+@import './variables.scss';
+.databasePlantDetails{
+
+    background-color: #F9F9F9;
+    height: calc(100vh - 129px);
+    
+    &__img {
+        height: 200px;
+        width: 100%;
+        overflow: hidden;
+        // position: absolute;
+        img{
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            object-position: center !important;
+            filter: brightness(50%);
+        }
+    }
+
+    h1, h2{
+        position: absolute;
+        z-index: 1;
+        color: white;
+        padding-left: 30px;
+        letter-spacing: 2px;
+    }
+    h1{
+        top: 140px;
+        font-size: 25px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    h2{
+        top: 180px;
+        font-style: italic;
+        font-size: 12px !important; // for some reason werkt dit nie, fontsize moet wa kleiner
+         // zoek leuke font family
+    }
+
+    &__info{
+        .card{
+            cursor: pointer;
+
+            .card-header{
+                background-color: white;
+                padding: 1.25rem;
+                transition: .5s all;
+
+                &:hover{
+                    background-color: $light-green;
+                }
+            }
+
+            .collapsing, .show{
+                font-size: 15px;
+                line-height: 22px;
+            }
+        }
+    }
+
+    &__addPlant{
+        @include default-paddings;
+        margin-top: 2rem;
+    }
+    
+}
+
+// margin-top: 50px;

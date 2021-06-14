@@ -1,16 +1,23 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import TopNav from './navigation/TopNav';
 import Navigation from './navigation/BottomNav';
 import PlantDetailsStats from './PlantDetailsStats'
 import PlantDetailsHistory from './PlantDetailsHistory'
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+import ButtonMedium from './navigation/ButtonMedium'
 import app from "../firebase"
 import Loader from "./Loader"
 import './PlantDetails.scss'
+
+const database = app.database();
 
 function PlantDetails(props){
     const [loading, setLoading] = useState(false)
     let [notes, setNotes] = useState('')
 
+    
     let img = props.location.plantsData.img
     let plant_id = props.location.plantsData.id
     let stats = props.location.plantsData.stats
@@ -18,6 +25,33 @@ function PlantDetails(props){
     let allNotes = props.location.plantsNotes
     let notesArr = []
     
+    const [show, setShow] = useState(false)
+    
+    const userId = app.auth().currentUser.uid
+    const database = app.database();
+    
+    const databaseRef = database.ref(`user_plants/` + userId + "/" + plant_id + "/" + 'notes')
+    
+    const handleShow = () => setShow(true)
+    const handleClose = () => setShow(false)
+  
+    const descRef = useRef()
+
+    function handleSubmit(e){
+      e.preventDefault();
+      let unixMs = new Date().getTime()/1000
+      let unix = Math.floor(unixMs)
+
+      
+      function setUserNote(date, inputDesc){
+        // databaseRef.child(date).push(
+        //     inputDesc
+        //   )
+      }
+
+      setUserNote(unix, descRef.current.value)
+    }
+
     useEffect(() => {
         setLoading(true)
 
@@ -27,17 +61,16 @@ function PlantDetails(props){
             }
         })
 
-
         notesArr = notesArr[0]
         setNotes(notesArr)
         
-        console.log(notes)
+        // console.log(notes)
 
         setTimeout(() => {
             setLoading(false)
         }, 800);
 
-        console.log(props.location)
+        // console.log(props.location)
     }, [])
 
     return(
@@ -64,19 +97,49 @@ function PlantDetails(props){
                         <h1>Plant geschiedenis</h1>
                         <div className="plantHistory__wrap">
                         <ul id="plantHistory__list">
-                            {notes.map((val, index) => {
-                                return(
-                                    <PlantDetailsHistory key={index} noteDate={val[0]} noteDesc={val[1]}/>
-                                )
-                            })}
+                            {!notes ? (
+                                <p>Nog geen notities!</p>
+                            ) : (
+                                notes.map((val, index) => {
+                                    return(
+                                        <PlantDetailsHistory key={index} noteDate={val[0]} noteDesc={val[1]}/>
+                                    )
+                                })
+                            )}
+                            {}
                         </ul>
                         </div>
+                        <Button className="modalButton" variant="primary" onClick={handleShow}>
+                            Notitie toevoegen
+                        </Button>
                     </div>
                     </>
                 ) : (
                     <Loader/>
                 )}
             </div>
+
+            <Modal show={show} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter" centered>
+            <Form onSubmit={handleSubmit}>
+                <Modal.Header closeButton>
+                <Modal.Title >Kalendernotitie toevoegen</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <Form.Group className="" id="desc">
+                    <Form.Label>Notitie</Form.Label>
+                    <Form.Control as="textarea" ref={descRef}/>
+                </Form.Group>
+                </Modal.Body>
+                <Modal.Footer>
+                <Button className="modalButton dark" variant="secondary" onClick={handleClose}>
+                    Annuleer
+                </Button>
+                <Button className="modalButton small" variant="primary" onClick={handleClose} type="submit">
+                    Opslaan
+                </Button>
+                </Modal.Footer>
+            </Form>
+            </Modal>
         <Navigation />
     </div>
     )

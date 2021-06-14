@@ -42,18 +42,6 @@ export default function PlantsInDatabase(props) {
         });
       });
 
-
-    function handleSubmit(e){
-        e.preventDefault()
-        function addUserPlants(){
-            const userId = app.auth().currentUser.uid
-            plantsListState.forEach(function(plant){
-                database.ref(`user_plants/`+ userId).child(plant.id).set({
-                    plant_id : plant.id,
-                    owned : plant.checked
-                });
-            })
-
       //   console.log('npl', newPlantsList);
       setPlantsListState(newPlantsList);
     });
@@ -61,7 +49,6 @@ export default function PlantsInDatabase(props) {
       setLoading(false);
     }, 800);
   }, []);
-
 
   function handleChange(e) {
     setLoading(true);

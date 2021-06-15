@@ -40,7 +40,10 @@ function SensorDataBlock(props) {
     <div className={'sensorDataBlock'}>
       <SensorCardList   key={props.sensorData} 
                         sensorData={props.sensorData} 
-                        waterData={props.waterData}/>
+                        waterData={props.waterData}
+                        tempData={props.tempData}
+                        lightData={props.lightData}
+                        />
         {sensorData.map((sensor, index) => {
           return (
             <h3 key={index} className={'sensorDataBlock__message'}>

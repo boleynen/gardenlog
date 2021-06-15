@@ -24,7 +24,21 @@ const unixToTime = (u) =>{
 }
 
 function SensorDetailsGraph(props) {
-    let waterData = props.waterData;
+
+  let sensorData = '';
+  let sensorTitle = '';
+
+  if(props.waterData){
+    sensorData = props.waterData
+    sensorTitle = 'Vochtigheid'
+  }else if(props.tempData){
+    sensorData = props.tempData
+    sensorTitle = 'Temperatuur'
+  }else if(props.lightData){
+    sensorData = props.lightData
+    sensorTitle = 'Licht'
+  }
+
     let color = props.color;
     let [data, setData] = useState([])
     let [selectedDay, setSelectedDay] = useState(today)
@@ -38,10 +52,10 @@ function SensorDetailsGraph(props) {
       d.setHours(0,0,0,0);
       let lastMidnight = d.getTime()/1000;
 
-      for (const [key, value] of Object.entries(waterData)) {
+      for (const [key, value] of Object.entries(sensorData)) {
         let time = unixToTime(key)
         time = time.slice(0,5)
-
+        
         if(key > lastMidnight ){
           if( time == "02:00" || 
               time == "04:00" || 
@@ -56,7 +70,13 @@ function SensorDetailsGraph(props) {
               time == "22:00" || 
               time == "24:00"){
               hoursArray.push(time)
-              dataArray.push(value/10)
+              if(props.waterData){
+                dataArray.push(value*10)
+              }else if(props.tempData){
+                dataArray.push(value)
+              }else if(props.lightData){
+                dataArray.push(value/10)
+              }
           }
         }
       };
@@ -67,7 +87,7 @@ function SensorDetailsGraph(props) {
       data = {
           labels: hoursArray,
           datasets: [{
-              label: 'Vochtigheid',
+              label: sensorTitle,
               data: dataArray,
               // data: [1,2,3,4,5,6,7,8,9,10],
               borderColor: color,
@@ -77,7 +97,6 @@ function SensorDetailsGraph(props) {
       }
 
       setData(data)
-      console.log(hoursArray)
 
   }, [])
 

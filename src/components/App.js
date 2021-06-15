@@ -34,10 +34,7 @@ function App() {
           <PrivateRoute path='/sensor-details' component={SensorDetails} />
           <PrivateRoute path='/plant-details' component={PlantDetails} />
           <PrivateRoute path='/plant-database' component={PlantDatabase} />
-          <PrivateRoute
-            path='/database-plant-details'
-            component={DatabasePlantDetails}
-          />
+          <PrivateRoute path='/database-plant-details' component={DatabasePlantDetails} />
           <Route path='/signup' component={Signup} />
           <Route path='/login' component={Login} />
           <Route path='/forgot-password' component={ForgotPassword} />

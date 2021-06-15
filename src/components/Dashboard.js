@@ -21,7 +21,7 @@ export default function Dashboard() {
   var [waterData, setWaterData] = useState([]);
   var lastWaterValue =
       {
-      data: '?',
+      data: 'aan het berekenen...',
       title: 'Temperatuur',
       color: '#F88484',
       icon: faExclamation,
@@ -30,7 +30,7 @@ export default function Dashboard() {
   var [tempData, setTempData] = useState([]);
   var lastTempValue =
     {
-      data: '?',
+      data: 'aan het berekenen...',
       title: 'Vochtigheid',
       color: '#9ED3FC',
       icon: faExclamation,
@@ -39,7 +39,7 @@ export default function Dashboard() {
   var [lightData, setLightData] = useState([]);
   var lastLightValue =
     {
-      data: '?',
+      data: 'aan het berekenen...',
       title: 'Licht',
       color: '#FFDB5E',
       icon: faExclamation,
@@ -84,6 +84,7 @@ export default function Dashboard() {
 
     // console.log(plantNotes)
     setPlantNotes(plantNotes)
+    setSensorData([])
 
     const responseFilteredPlants = []
     databasePlantsRef.on('value', (data) =>{
@@ -99,11 +100,9 @@ export default function Dashboard() {
           }
         })
       }
-
-      setPlantsData(responseFilteredPlants)
-    
     })
 
+    setPlantsData(responseFilteredPlants)
 
     var responseWaterValues = [];
     var responseTempValues = [];
@@ -121,7 +120,6 @@ export default function Dashboard() {
 
     databaseWaterSensorRef.on('value', (snapshot) =>{
       var waterValues = snapshot.val();
-      responseWaterValues = [];
 
       setWaterData(waterValues)
       const waterValuesArr = Object.values(waterValues)
@@ -150,12 +148,17 @@ export default function Dashboard() {
           class: waterClass,
           status: waterMessage
         }
-      }, 100);
+      }, 50);
+
+      setSensorData([
+        lastWaterValue, lastLightValue, lastTempValue
+        ])
+
     })
 
     databaseLightSensorRef.on('value', (snapshot) =>{
       var lightValues = snapshot.val();
-      responseLightValues = [];
+
 
       setLightData(lightValues)
       const lightValuesArr = Object.values(lightValues)
@@ -183,13 +186,16 @@ export default function Dashboard() {
           class: lightClass,
           status: lightMessage
         }
-      }, 100);
+      }, 50);
+
+      setSensorData([
+        lastWaterValue, lastLightValue, lastTempValue
+        ])
       
     })
 
     databaseTempSensorRef.on('value', (snapshot) =>{
       var tempValues = snapshot.val();
-      responseTempValues = [];
 
       setTempData(tempValues)
       const tempValuesArr = Object.values(tempValues)
@@ -218,8 +224,12 @@ export default function Dashboard() {
           class: tempClass,
           status: tempMessage
         }
-      }, 100);
-      
+      }, 50);
+
+      setSensorData([
+        lastWaterValue, lastLightValue, lastTempValue
+        ])
+
     })
 
 

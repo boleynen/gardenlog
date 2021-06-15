@@ -30,7 +30,7 @@ export default function Calendar() {
     return (
         <>
             <div className="content-wrapper">
-                <TopNav className="title"  pageTitle={"Kalender"}/>
+                <TopNav pageTitle={"Kalender"}/>
                 <div className="calender">
                     <Calender
                         value={dateState}

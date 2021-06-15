@@ -1,23 +1,40 @@
 import React, { useRef, useState } from 'react';
 import { Form, Button, Card } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
-import "./ProfileSetup.scss"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import usePlacesAutocomplete from '@atomap/use-places-autocomplete'
 import app from "../firebase"
 import firebase from 'firebase';
-
+import "./ProfileSetup.scss"
+import './LocationAutocomplete.scss'
 
 export default function ProfileSetup() {
-    const firstnameRef = useRef()
-    const lastnameRef = useRef()
-    const history = useHistory()
-    const [fileName, setFileName] = useState('');
     const userId = app.auth().currentUser.uid
-
     const database = app.database();
     var storage = app.storage();
+
+    const firstnameRef = useRef()
+    const lastnameRef = useRef()
+    const locationRef = useRef()
+
+    const history = useHistory()
+    const [fileName, setFileName] = useState('');
+    const [location, setLocation] = useState(locationRef);
     
+    const [selectedPrediction, setSelectedPrediction] = useState(null)
+    const [searchValue, setSearchValue] = useState('')
+    const { predictions, error } = usePlacesAutocomplete(searchValue)
+    
+    if (error) {
+        console.error(error)
+    }
+    
+    const handlePredictionSelection = (e, prediction) => {
+        e.preventDefault()
+        setSelectedPrediction(prediction)
+    }
+
     async function setUserImage(image){
         // image naam veranderen naar --userId--.png
         var blob = image.slice(0, image.size, 'image/png'); 
@@ -31,17 +48,21 @@ export default function ProfileSetup() {
     async function handleSubmit(e) {
         e.preventDefault()
         const userId = app.auth().currentUser.uid
+        // console.log(selectedPrediction)
 
-        function setUserData(firstName, lastName){
-            database.ref(`users/`+ userId).set({
-                firstname: firstName,
-                lastname: lastName
-              });
-            history.push("/add-plants")
+        function setUserData(firstName, lastName, location){
+            // database.ref(`users/`+ userId).set({
+            //     firstname: firstName,
+            //     lastname: lastName,
+            //     location: location
+            //   });
+            // history.push("/add-plants")
+            console.log(firstName, lastName, selectedPrediction)
         }
 
-        setUserData(firstnameRef.current.value, lastnameRef.current.value);
-      }
+    //
+    setUserData(firstnameRef.current.value, lastnameRef.current.value, selectedPrediction.description);
+    }
 
     return(
         <>
@@ -55,11 +76,11 @@ export default function ProfileSetup() {
                 <Form onSubmit={handleSubmit}>
                     <Form.Group id="firstname">
                         <Form.Label>Voornaam</Form.Label>
-                        <Form.Control type="firstname" ref={firstnameRef} required />
+                        <Form.Control type="firstname" ref={firstnameRef} required/>
                     </Form.Group>
                     <Form.Group id="lastname">
                         <Form.Label>Achternaam</Form.Label>
-                        <Form.Control type="lastname" ref={lastnameRef} required />
+                        <Form.Control type="lastname" ref={lastnameRef} required/>
                     </Form.Group>
                     <Form.Group>
                         <Form.File  id="profilePicture" 
@@ -67,6 +88,40 @@ export default function ProfileSetup() {
                                     onChange={(e) => setUserImage(e.target.files[0])}
                                     required 
                                     />
+                    </Form.Group>
+                    <Form.Group className="locationSearch">
+                    <Form.Label>Locatie van je (moes)tuin</Form.Label>
+                        <input
+                            required
+                            ref={locationRef}
+                            name="predictionSearch"
+                            value={searchValue}
+                            className="form-control"
+                            onChange={(e) => setSearchValue(e.target.value)}
+                        />
+                        <ul>
+                            {predictions?.map((prediction) => (
+                            <li key={prediction?.place_id}>
+                                <button
+                                onClick={(e) => handlePredictionSelection(e, prediction)}
+                                onKeyDown={(e) => handlePredictionSelection(e, prediction)}
+                                >
+                                {prediction?.description || 'Not found'}
+                                </button>
+                            </li>
+                            ))}
+                        </ul>
+                        {searchValue?(
+                            <>
+                            <h3>
+                                Je selecteerde:{' '}
+                                {selectedPrediction?.structured_formatting?.main_text || '...'}
+                            </h3>
+                            <p></p>
+                            </>
+                        ):(
+                            null
+                        )}
                     </Form.Group>
                     <Button className="" type="submit">
                         Verder &nbsp; <FontAwesomeIcon icon={faAngleRight} />

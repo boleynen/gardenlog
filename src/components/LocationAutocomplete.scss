@@ -1,0 +1,17 @@
+.locationSearch{
+    h3{
+        font-size: 12px;
+    }
+
+    ul{
+        li{
+            &::marker{
+                content: '';
+            }
+            button{
+                margin: 0;
+                padding: 0;
+            }
+        }
+    }
+}

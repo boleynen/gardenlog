@@ -10,6 +10,8 @@ import Geocode from "react-geocode";
 import Loader from './../Loader'
 import unixToDay from "../../functions/unixToDay";
 import unixToTime from "../../functions/unixToTime";
+import GetLocation from "../../functions/GetLocation";
+import app from "./../../firebase"
 const axios = require('axios');
 
 
@@ -18,6 +20,8 @@ function Weather() {
     const [query, setQuery] = useState('');
     const [apiData, setApiData] = useState(null);
     const [userLocation, setUserLocation] = useState(null);
+    const userId = app.auth().currentUser.uid
+    const database = app.database();
 
 
     let lat = 51.24;
@@ -25,6 +29,7 @@ function Weather() {
 
     useEffect(() => {
         setLoading(true)
+        console.log(GetLocation())
 
         async function fetchMyApi(){
             const data = await fetchWeather(query)
@@ -60,6 +65,13 @@ function Weather() {
               console.error(error);
             }
           );
+
+        //   database.ref(`users/` + userId)/onabort('value', (data) =>{
+        //     const user = data.val();
+        //     return(
+        //         user
+        //     )
+        // })
 
           setTimeout(() => {
             setLoading(false)

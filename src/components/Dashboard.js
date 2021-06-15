@@ -99,9 +99,11 @@ export default function Dashboard() {
           }
         })
       }
+
+      setPlantsData(responseFilteredPlants)
+    
     })
 
-    setPlantsData(responseFilteredPlants)
 
     var responseWaterValues = [];
     var responseTempValues = [];
@@ -148,7 +150,7 @@ export default function Dashboard() {
           class: waterClass,
           status: waterMessage
         }
-      }, 50);
+      }, 100);
     })
 
     databaseLightSensorRef.on('value', (snapshot) =>{
@@ -181,7 +183,7 @@ export default function Dashboard() {
           class: lightClass,
           status: lightMessage
         }
-      }, 50);
+      }, 100);
       
     })
 
@@ -216,7 +218,7 @@ export default function Dashboard() {
           class: tempClass,
           status: tempMessage
         }
-      }, 50);
+      }, 100);
       
     })
 

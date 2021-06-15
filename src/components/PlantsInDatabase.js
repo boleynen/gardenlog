@@ -132,7 +132,6 @@ export default function PlantsInDatabase(props) {
     const introAddPlantsList = () => {
     return (
         <>
-        {loading === false ? (
             <Form onSubmit={handleSubmit}>
             {plantsListState.map((plant, index) => (
                 <div key={index} className='selectPlant'>
@@ -155,9 +154,6 @@ export default function PlantsInDatabase(props) {
                 Voltooi &nbsp; <FontAwesomeIcon icon={faAngleRight} />
             </Button>
             </Form>
-        ) : (
-            <Loader />
-        )}
         </>
     );
     };

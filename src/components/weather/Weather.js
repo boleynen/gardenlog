@@ -6,11 +6,11 @@ import translateWeather from '../../functions/translateWeather'
 import findImg from '../../functions/findImg'
 import findSmallImg from '../../functions/findSmallImg'
 import './Weather.scss';
-import Geocode from "react-geocode";
 import Loader from './../Loader'
 import unixToDay from "../../functions/unixToDay";
 import unixToTime from "../../functions/unixToTime";
-import GetLocation from "../../functions/GetLocation";
+import GeocodeFromLatLng from "../../functions/GeocodeFromLatLon.js";
+import GeocodeFromAdress from "../../functions/GeocodeFromAdress.js";
 import app from "./../../firebase"
 const axios = require('axios');
 
@@ -19,60 +19,31 @@ function Weather() {
     const [loading, setLoading] = useState(false);
     const [query, setQuery] = useState('');
     const [apiData, setApiData] = useState(null);
+    const [userLatLon, setUserLatLon] = useState(null);
     const [userLocation, setUserLocation] = useState(null);
     const userId = app.auth().currentUser.uid
     const database = app.database();
 
-
-    let lat = 51.24;
-    let lon = 5.11; 
-
     useEffect(() => {
         setLoading(true)
-        console.log(GetLocation())
 
         async function fetchMyApi(){
             const data = await fetchWeather(query)
             console.log(data)
             setApiData(data)
         }
-
         fetchMyApi()
+        
+        database.ref(`users/` + userId).on('value', (data) =>{
+            const user = data.val();
+            const location = user.location
+            console.log(location)
+            setUserLatLon(GeocodeFromAdress(location))
+            setUserLocation(location)
+        })
 
-        Geocode.setApiKey("AIzaSyCulUiAQPwTtcagVE-fTb8OUXEHuNhGpFA");
-        Geocode.setLanguage("nl");
-        Geocode.setRegion("nl");
-    
-        // lat & lon naar plaats
-        Geocode.fromLatLng(lat, lon).then(
-            (response) => {
-              let city, country;
-              for (let i = 0; i < response.results[0].address_components.length; i++) {
-                for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
-                  switch (response.results[0].address_components[i].types[j]) {
-                    case "locality":
-                      city = response.results[0].address_components[i].long_name;
-                      break;
-                    case "country":
-                      country = response.results[0].address_components[i].long_name;
-                      break;
-                  }
-                }
-              }
-              setUserLocation(city + ', ' + country)
-            },
-            (error) => {
-              console.error(error);
-            }
-          );
 
-        //   database.ref(`users/` + userId)/onabort('value', (data) =>{
-        //     const user = data.val();
-        //     return(
-        //         user
-        //     )
-        // })
-
+        console.log(apiData)
           setTimeout(() => {
             setLoading(false)
           }, 1000);
@@ -89,8 +60,7 @@ function Weather() {
                 <div className="weatherToday">
                     <div className="weatherToday__title">
                         <h1>{translateWeather(apiData.current.weather[0].main)}</h1>
-                        {/* <h2>{userLocation}</h2> */}
-                        <h2>Dessel-belgie</h2>
+                        <h2>{userLocation}</h2>
                     </div>
                     <div className="weatherToday__temp">
                         <p>{apiData.current.temp.toFixed(1)}&deg;</p>

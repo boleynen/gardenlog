@@ -51,13 +51,13 @@ export default function ProfileSetup() {
         // console.log(selectedPrediction)
 
         function setUserData(firstName, lastName, location){
-            // database.ref(`users/`+ userId).set({
-            //     firstname: firstName,
-            //     lastname: lastName,
-            //     location: location
-            //   });
-            // history.push("/add-plants")
-            console.log(firstName, lastName, selectedPrediction)
+            database.ref(`users/`+ userId).set({
+                firstname: firstName,
+                lastname: lastName,
+                location: location
+              });
+            history.push("/add-plants")
+            // console.log(firstName, lastName, selectedPrediction)
         }
 
     //

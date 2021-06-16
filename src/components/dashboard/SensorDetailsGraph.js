@@ -7,7 +7,7 @@ import './SensorDetailsGraph.scss'
 
 // vraag datum van vandaag op (weekdag + dag + maand)
 const date = new Date();
-console.log(date)
+// console.log(date)
 let weekday = date.toLocaleString('nl-NL', { weekday: 'long' });
 weekday = weekday[0].toUpperCase() + weekday.substring(1);
 let day = date.toLocaleString('nl-NL', { day: 'numeric' });

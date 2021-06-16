@@ -52,14 +52,16 @@ function PlantDetails(props){
       }
 
       setUserNote(unix, descRef.current.value)
+    //   setAllNotes(props.location.plantsNotes)
+      console.log(allNotes)
     }
 
     useEffect(() => {
         setLoading(true)
 
+        notesArr = []
+
         allNotes.forEach(function(val){
-            console.log('sd',val[0].plant_id)
-            console.log('id',plant_id)
 
             if(val[0].plant_id === plant_id){
                 // console.log(val[1])
@@ -67,7 +69,7 @@ function PlantDetails(props){
             }
         })
 
-        console.log(notesArr)
+        // console.log(notesArr)
 
         notesArr = notesArr[0]
         setNotes(notesArr)
@@ -76,7 +78,9 @@ function PlantDetails(props){
             setLoading(false)
         }, 800);
 
-    }, [])
+        setAllNotes(props.location.plantsNotes)
+
+    }, [props.location.plantsNotes])
 
     return(
         <div className='content-wrapper'>
@@ -141,7 +145,6 @@ function PlantDetails(props){
                 </Button>
                 <Button className="modalButton small" variant="primary" onClick={()=>{
                     handleClose(); 
-                    setAllNotes([props.location.plantsNotes])
                     }} type="submit">
                     Opslaan
                 </Button>

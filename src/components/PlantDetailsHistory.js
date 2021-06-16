@@ -3,7 +3,6 @@ import unixToDate from '../functions/unixToDate'
 import './PlantDetailsHistory.scss'
 
 function PlantDetailsHistory(props){
-    console.log(props)
     let noteDate = props.noteDate
     let noteDesc = props.noteDesc
 
